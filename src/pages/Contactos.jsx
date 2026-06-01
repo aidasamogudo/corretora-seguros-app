@@ -1,10 +1,14 @@
 import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import Mapa from '../components/Mapa';
 import { 
   FaFacebook, FaInstagram, FaTiktok, FaWhatsapp, 
   FaEnvelope, FaPhone, FaMapMarkerAlt, FaUser, 
   FaFileAlt, FaCheckCircle, FaExclamationCircle, FaClock 
 } from 'react-icons/fa';
+
+// INICIALIZA COM SUA PUBLIC KEY
+emailjs.init("yX4GiHC0Vd2p9B7CA");
 
 function Contactos() {
   const [formData, setFormData] = useState({
@@ -89,7 +93,25 @@ function Contactos() {
 
     setStatus('enviando');
 
-    setTimeout(() => {
+    // ENVIO REAL DE EMAIL COM EMAILJS
+    const templateParams = {
+      from_name: formData.nome,
+      from_email: formData.email || 'Não informado',
+      from_telefone: formData.telefone || 'Não informado',
+      assunto: formData.assunto,
+      mensagem: formData.mensagem,
+      current_date: new Date().toLocaleString('pt-PT')
+    };
+
+    try {
+      const response = await emailjs.send(
+        'service_1alndbj',        // SEU SERVICE ID
+        'yX4GiHC0Vd2p9B7CA',      // SEU TEMPLATE ID
+        templateParams
+      );
+      
+      console.log('Email enviado!', response);
+      
       setStatus('sucesso');
       setMensagemStatus('Mensagem enviada com sucesso! Entraremos em contacto brevemente.');
       setFormData({
@@ -100,11 +122,21 @@ function Contactos() {
         mensagem: ''
       });
       setErros({});
+      
       setTimeout(() => {
         setStatus('');
         setMensagemStatus('');
       }, 5000);
-    }, 1500);
+      
+    } catch (error) {
+      console.error('Erro ao enviar email:', error);
+      setStatus('erro');
+      setMensagemStatus('Erro ao enviar mensagem. Tente novamente ou contacte-nos por telefone.');
+      setTimeout(() => {
+        setStatus('');
+        setMensagemStatus('');
+      }, 5000);
+    }
   };
 
   return (
@@ -127,7 +159,6 @@ function Contactos() {
             <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#D1B274', marginTop: '20px' }}>
               <FaEnvelope /> Email
             </h3>
-            {/* CORREÇÃO DO EMAIL AQUI */}
             <p style={{ 
               color: '#000000', 
               wordBreak: 'break-all', 
@@ -273,7 +304,6 @@ function Contactos() {
         </div>
       </div>
 
-      {/* CSS para garantir que o email não vaze no mobile */}
       <style>{`
         @media (max-width: 768px) {
           .email-container {
