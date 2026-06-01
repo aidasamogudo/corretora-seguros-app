@@ -1,4 +1,4 @@
-import { FaFacebook, FaInstagram, FaTiktok, FaWhatsapp, FaLinkedin, FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, FaShieldAlt, FaHandshake, FaUserFriends, FaBuilding } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaTiktok, FaWhatsapp, FaLinkedin, FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
 
 function Footer() {
   return (
@@ -19,11 +19,10 @@ function Footer() {
         <div>
           <h4 style={{ color: '#D1B274', marginBottom: '1rem', fontSize: '1.1rem' }}>Produtos e Serviços</h4>
           <ul style={{ listStyle: 'none', padding: 0 }}>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/servicos" style={{ color: '#aaa', textDecoration: 'none', transition: '0.3s' }}>Seguro Automóvel</a></li>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/servicos" style={{ color: '#aaa', textDecoration: 'none', transition: '0.3s' }}>Seguro de Saúde</a></li>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/servicos" style={{ color: '#aaa', textDecoration: 'none', transition: '0.3s' }}>Seguro de Vida</a></li>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/servicos" style={{ color: '#aaa', textDecoration: 'none', transition: '0.3s' }}>Seguro de Acidente</a></li>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/servicos" style={{ color: '#aaa', textDecoration: 'none', transition: '0.3s' }}>Seguro Empresarial</a></li>
+            <li style={{ marginBottom: '0.5rem' }}><a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro Automóvel</a></li>
+            <li style={{ marginBottom: '0.5rem' }}><a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro de Saúde</a></li>
+            <li style={{ marginBottom: '0.5rem' }}><a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro de Vida</a></li>
+            <li style={{ marginBottom: '0.5rem' }}><a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro Empresarial</a></li>
           </ul>
         </div>
 
@@ -31,10 +30,7 @@ function Footer() {
         <div>
           <h4 style={{ color: '#D1B274', marginBottom: '1rem', fontSize: '1.1rem' }}>Ajuda e Suporte</h4>
           <ul style={{ listStyle: 'none', padding: 0 }}>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/contactos" style={{ color: '#aaa', textDecoration: 'none', transition: '0.3s' }}>Contactos</a></li>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/faq" style={{ color: '#aaa', textDecoration: 'none', transition: '0.3s' }}>Perguntas Frequentes</a></li>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/simular" style={{ color: '#aaa', textDecoration: 'none', transition: '0.3s' }}>Simular Seguro</a></li>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/reclamacoes" style={{ color: '#aaa', textDecoration: 'none', transition: '0.3s' }}>Livro de Reclamações</a></li>
+            <li style={{ marginBottom: '0.5rem' }}><a href="/contactos" style={{ color: '#aaa', textDecoration: 'none' }}>Contactos</a></li>
           </ul>
         </div>
 
@@ -45,16 +41,6 @@ function Footer() {
             <li style={{ marginBottom: '0.5rem' }}>
               <a href="https://wa.me/258861324444" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <FaWhatsapp size={14} color="#D1B274" /> WhatsApp Chat
-              </a>
-            </li>
-            <li style={{ marginBottom: '0.5rem' }}>
-              <a href="https://business.facebook.com/latest/home?business_id=408569482257918&asset_id=109508805497322" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <FaFacebook size={14} color="#D1B274" /> Facebook Chat
-              </a>
-            </li>
-            <li style={{ marginBottom: '0.5rem' }}>
-              <a href="https://www.instagram.com/premium_corretora_seguros_mz/" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <FaInstagram size={14} color="#D1B274" /> Instagram Chat
               </a>
             </li>
             <li style={{ marginBottom: '0.5rem' }}>
@@ -69,10 +55,8 @@ function Footer() {
         <div>
           <h4 style={{ color: '#D1B274', marginBottom: '1rem', fontSize: '1.1rem' }}>Premium Corretora</h4>
           <ul style={{ listStyle: 'none', padding: 0 }}>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/sobre" style={{ color: '#aaa', textDecoration: 'none', transition: '0.3s' }}>Sobre nós</a></li>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/parceiros" style={{ color: '#aaa', textDecoration: 'none', transition: '0.3s' }}>Seguradoras Parceiras</a></li>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/blog" style={{ color: '#aaa', textDecoration: 'none', transition: '0.3s' }}>Blog e Dicas</a></li>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/vagas" style={{ color: '#aaa', textDecoration: 'none', transition: '0.3s' }}>Vagas</a></li>
+            <li style={{ marginBottom: '0.5rem' }}><a href="/sobre" style={{ color: '#aaa', textDecoration: 'none' }}>Sobre nós</a></li>
+            <li style={{ marginBottom: '0.5rem' }}><a href="/parceiros" style={{ color: '#aaa', textDecoration: 'none' }}>Seguradoras Parceiras</a></li>
           </ul>
         </div>
 
@@ -80,10 +64,8 @@ function Footer() {
         <div>
           <h4 style={{ color: '#D1B274', marginBottom: '1rem', fontSize: '1.1rem' }}>Legal</h4>
           <ul style={{ listStyle: 'none', padding: 0 }}>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/termos" style={{ color: '#aaa', textDecoration: 'none', transition: '0.3s' }}>Termos e Condições</a></li>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/privacidade" style={{ color: '#aaa', textDecoration: 'none', transition: '0.3s' }}>Política de Privacidade</a></li>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/cookies" style={{ color: '#aaa', textDecoration: 'none', transition: '0.3s' }}>Política de Cookies</a></li>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/dados" style={{ color: '#aaa', textDecoration: 'none', transition: '0.3s' }}>Meus dados pessoais</a></li>
+            <li style={{ marginBottom: '0.5rem' }}><a href="/sobre" style={{ color: '#aaa', textDecoration: 'none' }}>Termos e Condições</a></li>
+            <li style={{ marginBottom: '0.5rem' }}><a href="/sobre" style={{ color: '#aaa', textDecoration: 'none' }}>Política de Privacidade</a></li>
           </ul>
         </div>
       </div>
@@ -97,7 +79,8 @@ function Footer() {
         padding: '1.5rem 0', 
         borderTop: '1px solid #333', 
         borderBottom: '1px solid #333',
-        marginBottom: '1.5rem'
+        marginBottom: '1.5rem',
+        gap: '1rem'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <FaPhone color="#D1B274" size={14} />                 
@@ -127,20 +110,17 @@ function Footer() {
         marginBottom: '1.5rem'
       }}>
         <div style={{ display: 'flex', gap: '1rem' }}>
-          <a href="https://business.facebook.com/latest/home?business_id=408569482257918&asset_id=109508805497322" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa', transition: '0.3s' }}>
+          <a href="https://business.facebook.com/latest/home?business_id=408569482257918&asset_id=109508805497322" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa' }}>
             <FaFacebook size={20} />
           </a>
-          <a href="https://www.instagram.com/premium_corretora_seguros_mz/" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa', transition: '0.3s' }}>
+          <a href="https://www.instagram.com/premium_corretora_seguros_mz/" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa' }}>
             <FaInstagram size={20} />
           </a>
-          <a href="https://www.tiktok.com/@aidamanuelsamogud" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa', transition: '0.3s' }}>
+          <a href="https://www.tiktok.com/@aidamanuelsamogud" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa' }}>
             <FaTiktok size={20} />
           </a>
-          <a href="https://wa.me/258861324444" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa', transition: '0.3s' }}>
+          <a href="https://wa.me/258861324444" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa' }}>
             <FaWhatsapp size={20} />
-          </a>
-          <a href="#" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa', transition: '0.3s' }}>
-            <FaLinkedin size={20} />
           </a>
         </div>
         <div>

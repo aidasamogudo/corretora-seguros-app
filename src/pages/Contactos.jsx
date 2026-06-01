@@ -108,7 +108,7 @@ function Contactos() {
   };
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
+    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px', overflowX: 'hidden' }}>
       <h1 style={{ color: '#D1B274', marginBottom: '30px' }}>Contactos</h1>
       
       {/* Layout principal com 2 colunas */}
@@ -120,20 +120,29 @@ function Contactos() {
             <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#D1B274' }}>
               <FaPhone /> Telefones
             </h3>
-            <p style={{ color: '#000000' }}>82 / 84 / 87 444 8881</p>
-            <p style={{ color: '#000000' }}>86 132 4444</p>
-            <p style={{ color: '#000000' }}>84 747 5190</p>
+            <p style={{ color: '#000000', wordBreak: 'break-word' }}>82 / 84 / 87 444 8881</p>
+            <p style={{ color: '#000000', wordBreak: 'break-word' }}>86 132 4444</p>
+            <p style={{ color: '#000000', wordBreak: 'break-word' }}>84 747 5190</p>
             
             <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#D1B274', marginTop: '20px' }}>
               <FaEnvelope /> Email
             </h3>
-            <p style={{ color: '#000000' }}>premium@premiumcorretoraseguros.com</p>
+            {/* CORREÇÃO DO EMAIL AQUI */}
+            <p style={{ 
+              color: '#000000', 
+              wordBreak: 'break-all', 
+              overflowWrap: 'break-word',
+              whiteSpace: 'normal',
+              maxWidth: '100%'
+            }}>
+              premium@premiumcorretoraseguros.com
+            </p>
             
             <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#D1B274', marginTop: '20px' }}>
               <FaClock /> Horário
             </h3>
-            <p style={{ color: '#000000' }}>Segunda - Sexta: 8h - 17h</p>
-            <p style={{ color: '#000000' }}>Sábado: 8h - 12h</p>
+            <p style={{ color: '#000000', wordBreak: 'break-word' }}>Segunda - Sexta: 8h - 17h</p>
+            <p style={{ color: '#000000', wordBreak: 'break-word' }}>Sábado: 8h - 12h</p>
             
             <hr style={{ margin: '20px 0', borderColor: '#888' }} />
             
@@ -185,7 +194,7 @@ function Contactos() {
                 placeholder="Nome completo *" 
                 value={formData.nome}
                 onChange={handleChange}
-                style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px' }}
+                style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px', boxSizing: 'border-box' }}
                 required
               />
               {erros.nome && <small style={{ color: 'red' }}>{erros.nome}</small>}
@@ -199,7 +208,7 @@ function Contactos() {
                   placeholder="Email" 
                   value={formData.email}
                   onChange={handleChange}
-                  style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px' }}
+                  style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px', boxSizing: 'border-box' }}
                 />
                 {erros.email && <small style={{ color: 'red' }}>{erros.email}</small>}
               </div>
@@ -210,7 +219,7 @@ function Contactos() {
                   placeholder="Telefone" 
                   value={formData.telefone}
                   onChange={handleChange}
-                  style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px' }}
+                  style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px', boxSizing: 'border-box' }}
                 />
                 {erros.telefone && <small style={{ color: 'red' }}>{erros.telefone}</small>}
               </div>
@@ -223,7 +232,7 @@ function Contactos() {
                 placeholder="Assunto *" 
                 value={formData.assunto}
                 onChange={handleChange}
-                style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px' }}
+                style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px', boxSizing: 'border-box' }}
                 required
               />
               {erros.assunto && <small style={{ color: 'red' }}>{erros.assunto}</small>}
@@ -236,7 +245,7 @@ function Contactos() {
                 rows="4"
                 value={formData.mensagem}
                 onChange={handleChange}
-                style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px' }}
+                style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px', boxSizing: 'border-box' }}
                 required
               />
               {erros.mensagem && <small style={{ color: 'red' }}>{erros.mensagem}</small>}
@@ -263,6 +272,16 @@ function Contactos() {
           </form>
         </div>
       </div>
+
+      {/* CSS para garantir que o email não vaze no mobile */}
+      <style>{`
+        @media (max-width: 768px) {
+          .email-container {
+            word-break: break-all !important;
+            overflow-wrap: break-word !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
