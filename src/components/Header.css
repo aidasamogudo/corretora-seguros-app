@@ -4,28 +4,31 @@
   position: sticky;
   top: 0;
   z-index: 1000;
+  width: 100%;
 }
 
 .header-container {
   display: flex;
   align-items: center;
-  padding: 1rem 5%;
+  justify-content: space-between;
+  padding: 0.8rem 5%;
   max-width: 1400px;
   margin: 0 auto;
-  gap: 3rem;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 
-/* Logo e texto - alinhado à esquerda */
+/* Logo e texto */
 .logo-link {
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.8rem;
   flex-shrink: 0;
 }
 
 .logo {
-  height: 100px;
+  height: 70px;
   width: auto;
   object-fit: contain;
 }
@@ -36,7 +39,7 @@
 }
 
 .logo-title {
-  font-size: 3.0rem;
+  font-size: 2rem;
   font-weight: bold;
   color: #ffffff;
   letter-spacing: -0.5px;
@@ -44,33 +47,35 @@
 }
 
 .logo-subtitle {
-  font-size: 1.70rem;
+  font-size: 1rem;
   color: #D1B274;
-  letter-spacing: 0.5px;
-  margin-top: -5px;
+  letter-spacing: 0.3px;
+  margin-top: 0px;
   line-height: 1.2;
 }
 
-/* Menu de navegação - alinhado à esquerda */
+/* Menu de navegação */
 .nav-menu {
   display: flex;
   align-items: center;
+  flex: 1;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
   list-style: none;
-  gap: 0.75rem;
+  gap: 0.5rem;
   margin: 0;
   padding: 0;
+  flex-wrap: wrap;
 }
 
 .nav-links a {
   text-decoration: none;
   color: #ffffff;
   font-weight: 500;
-  font-size: 1.2rem;
+  font-size: 1rem;
   transition: color 0.2s ease;
   padding: 4px 0;
   white-space: nowrap;
@@ -80,144 +85,117 @@
   color: #D1B274;
 }
 
-/* ESTILO PARA O LINK ATIVO */
 .nav-links a.active {
   color: #D1B274;
   font-weight: 600;
 }
 
-/* Separadores */
 .nav-separator {
   color: #D1B274;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 /* ============================================ */
-/* RESPONSIVIDADE - TUDO ALINHADO À ESQUERDA */
+/* RESPONSIVIDADE - MOBILE (TUDO QUE IMPORTA) */
 /* ============================================ */
 
 /* Tablet */
 @media (max-width: 1024px) {
-  .header-container {
-    gap: 2rem;
-  }
-  
   .logo-title {
-    font-size: 2.2rem;
+    font-size: 1.6rem;
   }
   .logo-subtitle {
-    font-size: 1.2rem;
+    font-size: 0.85rem;
   }
-  .logo {
-    height: 70px;
-  }
-  .nav-links a {
-    font-size: 1rem;
-  }
-  .nav-separator {
-    font-size: 1rem;
-  }
-  .nav-links {
-    gap: 0.5rem;
-  }
-}
-
-/* Mobile - faz o wrap mas mantém alinhado à esquerda */
-@media (max-width: 900px) {
-  .header-container {
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-  
-  .logo-link {
-    flex-shrink: 1;
-  }
-  
-  .logo-title {
-    font-size: 1.8rem;
-  }
-  
-  .logo-subtitle {
-    font-size: 0.9rem;
-  }
-  
   .logo {
     height: 55px;
   }
-  
-  .nav-links {
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 0.5rem 1rem;
-  }
-  
   .nav-links a {
-    font-size: 0.9rem;
-    white-space: normal;
-  }
-  
-  .nav-separator {
     font-size: 0.9rem;
   }
 }
 
-/* Mobile pequeno */
-@media (max-width: 700px) {
+/* Mobile (até 768px) - É O QUE IMPORTA PARA SEU CELULAR */
+@media (max-width: 768px) {
   .header-container {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 0.8rem;
+    align-items: center;
+    text-align: center;
+    padding: 0.8rem 3%;
+    gap: 0.5rem;
   }
   
-  .logo-title {
-    font-size: 1.5rem;
-  }
-  
-  .logo-subtitle {
-    font-size: 0.8rem;
+  .logo-link {
+    justify-content: center;
   }
   
   .logo {
     height: 45px;
   }
   
-  .nav-links {
-    gap: 0.3rem 0.7rem;
-  }
-  
-  .nav-links a {
-    font-size: 0.85rem;
-  }
-  
-  .nav-separator {
-    font-size: 0.85rem;
-  }
-}
-
-/* Mobile extra pequeno */
-@media (max-width: 550px) {
   .logo-title {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
   
   .logo-subtitle {
     font-size: 0.65rem;
-    margin-top: 2px;  /* <--- ADICIONE ESTA LINHA */
+    margin-top: 2px;
   }
   
-  .logo {
-    height: 40px;
+  .nav-menu {
+    width: 100%;
+    justify-content: center;
   }
   
   .nav-links {
-    gap: 0.3rem 0.5rem;
+    justify-content: center;
+    gap: 0.4rem 0.6rem;
   }
   
   .nav-links a {
     font-size: 0.75rem;
+    white-space: nowrap;
   }
   
   .nav-separator {
     font-size: 0.75rem;
+  }
+}
+
+/* Mobile muito pequeno (até 480px) */
+@media (max-width: 480px) {
+  .logo {
+    height: 38px;
+  }
+  
+  .logo-title {
+    font-size: 1.1rem;
+  }
+  
+  .logo-subtitle {
+    font-size: 0.55rem;
+  }
+  
+  .nav-links a {
+    font-size: 0.65rem;
+  }
+  
+  .nav-separator {
+    font-size: 0.65rem;
+  }
+}
+
+/* Telas estreitas (até 380px) */
+@media (max-width: 380px) {
+  .nav-links {
+    gap: 0.2rem 0.4rem;
+  }
+  
+  .nav-links a {
+    font-size: 0.6rem;
+  }
+  
+  .nav-separator {
+    font-size: 0.6rem;
   }
 }
