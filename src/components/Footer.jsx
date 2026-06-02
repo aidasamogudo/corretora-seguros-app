@@ -83,7 +83,9 @@ function Footer() {
         gap: '1rem'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <FaPhone color="#D1B274" size={14} />                 
+          <FaPhone color="#D1B274" size={14} /> 
+          <span>86 132 4444</span>  
+          <span>84 747 5190</span>              
           <span>82/84/87 444 8881</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -116,7 +118,7 @@ function Footer() {
           <a href="https://www.instagram.com/premium_corretora_seguros_mz/" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa' }}>
             <FaInstagram size={20} />
           </a>
-          <a href="https://www.tiktok.com/@aidamanuelsamogud" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa' }}>
+          <a href="https://www.tiktok.com/@premiumcorretoraseguros" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa' }}>
             <FaTiktok size={20} />
           </a>
           <a href="https://wa.me/258861324444" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa' }}>
