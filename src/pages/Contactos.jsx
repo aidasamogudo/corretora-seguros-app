@@ -188,7 +188,7 @@ function Contactos() {
                 style={{ textAlign: 'center', padding: '10px', background: '#f8f9fa', border: '1px solid #888', borderRadius: '5px', textDecoration: 'none', color: '#000000', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
                 <FaInstagram color="#D1B274" /> Instagram
               </a>
-              <a href="https://www.tiktok.com/@aidamanuelsamogud" target="_blank" rel="noopener noreferrer" 
+              <a href="https://www.tiktok.com/@premiumcorretoraseguros" target="_blank" rel="noopener noreferrer" 
                 style={{ textAlign: 'center', padding: '10px', background: '#f8f9fa', border: '1px solid #888', borderRadius: '5px', textDecoration: 'none', color: '#000000', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
                 <FaTiktok color="#D1B274" /> TikTok
               </a>
