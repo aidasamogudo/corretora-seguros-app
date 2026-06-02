@@ -152,9 +152,10 @@ function Contactos() {
             <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#D1B274' }}>
               <FaPhone /> Telefones
             </h3>
-            <p style={{ color: '#000000', wordBreak: 'break-word' }}>82 / 84 / 87 444 8881</p>
             <p style={{ color: '#000000', wordBreak: 'break-word' }}>86 132 4444</p>
             <p style={{ color: '#000000', wordBreak: 'break-word' }}>84 747 5190</p>
+            <p style={{ color: '#000000', wordBreak: 'break-word' }}>82 / 84 / 87 444 8881</p>
+            
             
             <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#D1B274', marginTop: '20px' }}>
               <FaEnvelope /> Email
