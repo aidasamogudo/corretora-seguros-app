@@ -85,7 +85,9 @@ function Footer() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <FaPhone color="#D1B274" size={14} /> 
           <span>86 132 4444</span>  
-          <span>84 747 5190</span>              
+          <p></p>
+          <span>84 747 5190</span>
+           <p></p>              
           <span>82/84/87 444 8881</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
