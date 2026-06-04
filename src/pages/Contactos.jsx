@@ -2,8 +2,8 @@ import { useState } from 'react';
 import Mapa from '../components/Mapa';
 import { 
   FaFacebook, FaInstagram, FaTiktok, FaWhatsapp, 
-  FaEnvelope, FaPhone, FaMapMarkerAlt, FaUser, 
-  FaFileAlt, FaCheckCircle, FaExclamationCircle, FaClock 
+  FaEnvelope, FaPhone, FaMapMarkerAlt, 
+  FaCheckCircle, FaExclamationCircle, FaClock 
 } from 'react-icons/fa';
 
 function Contactos() {
@@ -14,6 +14,8 @@ function Contactos() {
     assunto: '',
     mensagem: ''
   });
+  const [status, setStatus] = useState('');
+  const [mensagemStatus, setMensagemStatus] = useState('');
   const [erros, setErros] = useState({});
 
   const handleChange = (e) => {
@@ -65,19 +67,29 @@ function Contactos() {
     }
 
     if (!formData.email && !formData.telefone) {
-      alert('Por favor, preencha o email OU o telefone para contacto.');
+      setStatus('erro');
+      setMensagemStatus('Por favor, preencha o email OU o telefone para contacto.');
+      setTimeout(() => {
+        setStatus('');
+        setMensagemStatus('');
+      }, 5000);
       return;
     }
 
     if (Object.keys(novosErros).length > 0) {
       setErros(novosErros);
-      alert('Por favor, corrija os erros no formulário.');
+      setStatus('erro');
+      setMensagemStatus('Por favor, corrija os erros no formulário.');
+      setTimeout(() => {
+        setStatus('');
+        setMensagemStatus('');
+      }, 5000);
       return;
     }
 
-    // CONSTRUIR O EMAIL
-    const assuntoEmail = `Contacto do Site: ${formData.assunto}`;
-    const corpoEmail = `
+    // MÉTODO MAILTO - SEM API, SEM ERRO!
+    const assunto = encodeURIComponent(`Contacto do Site: ${formData.assunto}`);
+    const corpo = encodeURIComponent(`
 Nome: ${formData.nome}
 Email: ${formData.email || 'Não informado'}
 Telefone: ${formData.telefone || 'Não informado'}
@@ -88,15 +100,14 @@ ${formData.mensagem}
 
 ---
 Enviado pelo site Premium Corretora de Seguros
-    `;
-
-    // ABRIR O CLIENTE DE EMAIL DO USUÁRIO
-    const mailtoLink = `mailto:premium@premiumcorretoraseguros.com?subject=${encodeURIComponent(assuntoEmail)}&body=${encodeURIComponent(corpoEmail)}`;
+    `);
     
-    // Abrir o email no cliente padrão (Outlook, Gmail, etc.)
+    const mailtoLink = `mailto:premium@premiumcorretoraseguros.com?subject=${assunto}&body=${corpo}`;
+    
     window.location.href = mailtoLink;
     
-    // Limpar formulário
+    setStatus('sucesso');
+    setMensagemStatus('Seu cliente de email será aberto! Basta clicar em enviar.');
     setFormData({
       nome: '',
       email: '',
@@ -106,7 +117,10 @@ Enviado pelo site Premium Corretora de Seguros
     });
     setErros({});
     
-    alert('O seu cliente de email será aberto! Basta clicar em enviar.');
+    setTimeout(() => {
+      setStatus('');
+      setMensagemStatus('');
+    }, 5000);
   };
 
   return (
@@ -119,28 +133,22 @@ Enviado pelo site Premium Corretora de Seguros
             <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#D1B274' }}>
               <FaPhone /> Telefones
             </h3>
-            <p style={{ color: '#000000', wordBreak: 'break-word' }}>86 132 4444</p>
-            <p style={{ color: '#000000', wordBreak: 'break-word' }}>84 747 5190</p>
-            <p style={{ color: '#000000', wordBreak: 'break-word' }}>82 / 84 / 87 444 8881</p>
+            <p style={{ color: '#000000' }}>86 132 4444</p>
+            <p style={{ color: '#000000' }}>84 747 5190</p>
+            <p style={{ color: '#000000' }}>82 / 84 / 87 444 8881</p>
             
             <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#D1B274', marginTop: '20px' }}>
               <FaEnvelope /> Email
             </h3>
-            <p style={{ 
-              color: '#000000', 
-              wordBreak: 'break-all', 
-              overflowWrap: 'break-word',
-              whiteSpace: 'normal',
-              maxWidth: '100%'
-            }}>
+            <p style={{ color: '#000000', wordBreak: 'break-all' }}>
               premium@premiumcorretoraseguros.com
             </p>
             
             <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#D1B274', marginTop: '20px' }}>
               <FaClock /> Horário
             </h3>
-            <p style={{ color: '#000000', wordBreak: 'break-word' }}>Segunda - Sexta: 8h - 17h</p>
-            <p style={{ color: '#000000', wordBreak: 'break-word' }}>Sábado: 8h - 12h</p>
+            <p style={{ color: '#000000' }}>Segunda - Sexta: 8h - 17h</p>
+            <p style={{ color: '#000000' }}>Sábado: 8h - 12h</p>
             
             <hr style={{ margin: '20px 0', borderColor: '#888' }} />
             
@@ -190,7 +198,6 @@ Enviado pelo site Premium Corretora de Seguros
                 placeholder="Nome completo *" 
                 value={formData.nome}
                 onChange={handleChange}
-                autoComplete="name"
                 style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px', boxSizing: 'border-box' }}
                 required
               />
@@ -205,7 +212,6 @@ Enviado pelo site Premium Corretora de Seguros
                   placeholder="Email" 
                   value={formData.email}
                   onChange={handleChange}
-                  autoComplete="email"
                   style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px', boxSizing: 'border-box' }}
                 />
                 {erros.email && <small style={{ color: 'red' }}>{erros.email}</small>}
@@ -217,7 +223,6 @@ Enviado pelo site Premium Corretora de Seguros
                   placeholder="Telefone" 
                   value={formData.telefone}
                   onChange={handleChange}
-                  autoComplete="tel"
                   style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px', boxSizing: 'border-box' }}
                 />
                 {erros.telefone && <small style={{ color: 'red' }}>{erros.telefone}</small>}
@@ -231,7 +236,6 @@ Enviado pelo site Premium Corretora de Seguros
                 placeholder="Assunto *" 
                 value={formData.assunto}
                 onChange={handleChange}
-                autoComplete="off"
                 style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px', boxSizing: 'border-box' }}
                 required
               />
@@ -245,7 +249,6 @@ Enviado pelo site Premium Corretora de Seguros
                 rows="4"
                 value={formData.mensagem}
                 onChange={handleChange}
-                autoComplete="off"
                 style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px', boxSizing: 'border-box' }}
                 required
               />
@@ -257,18 +260,21 @@ Enviado pelo site Premium Corretora de Seguros
               style={{ background: '#D1B274', color: '#000000', padding: '12px 30px', border: 'none', borderRadius: '5px', cursor: 'pointer', width: '100%', fontWeight: 'bold', fontSize: '16px' }}>
               Enviar Mensagem
             </button>
+            
+            {status === 'sucesso' && (
+              <div style={{ background: '#d4edda', color: '#155724', padding: '10px', borderRadius: '5px', marginTop: '15px', textAlign: 'center' }}>
+                <FaCheckCircle /> {mensagemStatus}
+              </div>
+            )}
+            
+            {status === 'erro' && (
+              <div style={{ background: '#f8d7da', color: '#721c24', padding: '10px', borderRadius: '5px', marginTop: '15px', textAlign: 'center' }}>
+                <FaExclamationCircle /> {mensagemStatus}
+              </div>
+            )}
           </form>
         </div>
       </div>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .email-container {
-            word-break: break-all !important;
-            overflow-wrap: break-word !important;
-          }
-        }
-      `}</style>
     </div>
   );
 }
