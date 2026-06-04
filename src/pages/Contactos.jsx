@@ -17,6 +17,7 @@ function Contactos() {
   const [status, setStatus] = useState('');
   const [mensagemStatus, setMensagemStatus] = useState('');
   const [erros, setErros] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -45,7 +46,7 @@ function Contactos() {
     return texto.trim().length >= 5;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     const novosErros = {};
@@ -63,16 +64,13 @@ function Contactos() {
       novosErros.email = 'Digite um email válido (ex: nome@dominio.com)';
     }
     if (formData.telefone && !validarTelefone(formData.telefone)) {
-      novosErros.telefone = 'Digite um telefone válido (ex: 84 123 4567) - deve começar com 82, 83, 84, 85, 86 ou 87';
+      novosErros.telefone = 'Digite um telefone válido (ex: 84 123 4567)';
     }
 
     if (!formData.email && !formData.telefone) {
       setStatus('erro');
       setMensagemStatus('Por favor, preencha o email OU o telefone para contacto.');
-      setTimeout(() => {
-        setStatus('');
-        setMensagemStatus('');
-      }, 5000);
+      setTimeout(() => resetStatus(), 5000);
       return;
     }
 
@@ -80,47 +78,63 @@ function Contactos() {
       setErros(novosErros);
       setStatus('erro');
       setMensagemStatus('Por favor, corrija os erros no formulário.');
-      setTimeout(() => {
-        setStatus('');
-        setMensagemStatus('');
-      }, 5000);
+      setTimeout(() => resetStatus(), 5000);
       return;
     }
 
-    // MÉTODO MAILTO - SEM API, SEM ERRO!
-    const assunto = encodeURIComponent(`Contacto do Site: ${formData.assunto}`);
-    const corpo = encodeURIComponent(`
-Nome: ${formData.nome}
-Email: ${formData.email || 'Não informado'}
-Telefone: ${formData.telefone || 'Não informado'}
-Assunto: ${formData.assunto}
+    setIsLoading(true);
+    setStatus('enviando');
 
-Mensagem:
-${formData.mensagem}
+    // Web3Forms
+    const formDataToSend = new URLSearchParams();
+    formDataToSend.append('access_key', 'ea1c39da-a4d1-441e-a8f5-c32b46bfdb16');
+    formDataToSend.append('name', formData.nome);
+    formDataToSend.append('email', formData.email || 'nao_informado@email.com');
+    formDataToSend.append('phone', formData.telefone || 'Não informado');
+    formDataToSend.append('subject', formData.assunto);
+    formDataToSend.append('message', formData.mensagem);
+    formDataToSend.append('from_name', 'Premium Corretora Site');
 
----
-Enviado pelo site Premium Corretora de Seguros
-    `);
-    
-    const mailtoLink = `mailto:premium@premiumcorretoraseguros.com?subject=${assunto}&body=${corpo}`;
-    
-    window.location.href = mailtoLink;
-    
-    setStatus('sucesso');
-    setMensagemStatus('Seu cliente de email será aberto! Basta clicar em enviar.');
-    setFormData({
-      nome: '',
-      email: '',
-      telefone: '',
-      assunto: '',
-      mensagem: ''
-    });
-    setErros({});
-    
-    setTimeout(() => {
-      setStatus('');
-      setMensagemStatus('');
-    }, 5000);
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formDataToSend.toString()
+      });
+      
+      const result = await response.json();
+      console.log('Resposta Web3Forms:', result);
+      
+      if (result.success) {
+        setStatus('sucesso');
+        setMensagemStatus('Mensagem enviada com sucesso! Entraremos em contacto brevemente.');
+        setFormData({
+          nome: '',
+          email: '',
+          telefone: '',
+          assunto: '',
+          mensagem: ''
+        });
+        setErros({});
+      } else {
+        throw new Error(result.message || 'Erro ao enviar');
+      }
+      
+    } catch (error) {
+      console.error('Erro detalhado:', error);
+      setStatus('erro');
+      setMensagemStatus('Erro ao enviar mensagem. Tente novamente ou contacte-nos por telefone.');
+    } finally {
+      setIsLoading(false);
+      setTimeout(() => resetStatus(), 5000);
+    }
+  };
+
+  const resetStatus = () => {
+    setStatus('');
+    setMensagemStatus('');
   };
 
   return (
@@ -256,9 +270,10 @@ Enviado pelo site Premium Corretora de Seguros
             </div>
             
             <button 
-              type="submit"
+              type="submit" 
+              disabled={isLoading}
               style={{ background: '#D1B274', color: '#000000', padding: '12px 30px', border: 'none', borderRadius: '5px', cursor: 'pointer', width: '100%', fontWeight: 'bold', fontSize: '16px' }}>
-              Enviar Mensagem
+              {isLoading ? 'Enviando...' : 'Enviar Mensagem'}
             </button>
             
             {status === 'sucesso' && (
