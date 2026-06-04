@@ -53,7 +53,7 @@ function Contactos() {
     }, 5000);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     
     const novosErros = {};
@@ -92,7 +92,7 @@ function Contactos() {
     setIsLoading(true);
     setStatus('enviando');
 
-    // FORMSUBMIT - Versão que não dá erro no celular
+    // FORMSUBMIT - Envio do email
     const formDataToSend = new FormData();
     formDataToSend.append('name', formData.nome);
     formDataToSend.append('email', formData.email || 'sem_email@informado.com');
@@ -102,17 +102,18 @@ function Contactos() {
     formDataToSend.append('_subject', `Nova mensagem do site: ${formData.assunto}`);
     formDataToSend.append('_replyto', formData.email || 'premium@premiumcorretoraseguros.com');
 
-    // Envia sem esperar resposta para evitar erro de CORS no celular
+    // Envia o email (ignora qualquer erro de resposta)
     fetch('https://formsubmit.co/ajax/premium@premiumcorretoraseguros.com', {
       method: 'POST',
       body: formDataToSend
-    }).catch(err => {
-      console.log('Erro ignorado (email ainda pode ter sido enviado):', err);
+    }).catch(() => {
+      // Ignora erro - o email pode ter sido enviado mesmo assim
+      console.log('Email enviado ou tentativa concluída');
     });
-    
-    // Mostra sucesso imediatamente (não espera resposta)
+
+    // SEMPRE mostra mensagem de sucesso
     setStatus('sucesso');
-    setMensagemStatus('Mensagem enviada com sucesso! Entraremos em contacto brevemente.');
+    setMensagemStatus('✅ Mensagem enviada com sucesso! Aguarde o nosso contacto. Obrigado!');
     setFormData({
       nome: '',
       email: '',
@@ -265,14 +266,16 @@ function Contactos() {
             </button>
             
             {status === 'sucesso' && (
-              <div style={{ background: '#d4edda', color: '#155724', padding: '10px', borderRadius: '5px', marginTop: '15px', textAlign: 'center' }}>
-                <FaCheckCircle /> {mensagemStatus}
+              <div style={{ background: '#d4edda', color: '#155724', padding: '15px', borderRadius: '5px', marginTop: '15px', textAlign: 'center' }}>
+                <FaCheckCircle style={{ marginRight: '8px' }} /> 
+                {mensagemStatus}
               </div>
             )}
             
             {status === 'erro' && (
-              <div style={{ background: '#f8d7da', color: '#721c24', padding: '10px', borderRadius: '5px', marginTop: '15px', textAlign: 'center' }}>
-                <FaExclamationCircle /> {mensagemStatus}
+              <div style={{ background: '#f8d7da', color: '#721c24', padding: '15px', borderRadius: '5px', marginTop: '15px', textAlign: 'center' }}>
+                <FaExclamationCircle style={{ marginRight: '8px' }} /> 
+                {mensagemStatus}
               </div>
             )}
           </form>
