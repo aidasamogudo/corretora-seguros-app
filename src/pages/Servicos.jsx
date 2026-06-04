@@ -98,7 +98,7 @@ function Servicos() {
       }, 5000);
       return () => clearInterval(interval);
     }
-  }, [isAutoPlaying]);
+  }, );
 
   return (
     <div>
