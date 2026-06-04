@@ -1,14 +1,10 @@
 import { useState } from 'react';
-import emailjs from '@emailjs/browser';
 import Mapa from '../components/Mapa';
 import { 
   FaFacebook, FaInstagram, FaTiktok, FaWhatsapp, 
   FaEnvelope, FaPhone, FaMapMarkerAlt, FaUser, 
   FaFileAlt, FaCheckCircle, FaExclamationCircle, FaClock 
 } from 'react-icons/fa';
-
-// INICIALIZA COM SUA PUBLIC KEY
-emailjs.init("yX4GiHC0Vd2p9B7CA");
 
 function Contactos() {
   const [formData, setFormData] = useState({
@@ -21,6 +17,7 @@ function Contactos() {
   const [status, setStatus] = useState('');
   const [mensagemStatus, setMensagemStatus] = useState('');
   const [erros, setErros] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -91,51 +88,57 @@ function Contactos() {
       return;
     }
 
+    setIsSubmitting(true);
     setStatus('enviando');
 
-    // ENVIO REAL DE EMAIL COM EMAILJS
-    const templateParams = {
-      from_name: formData.nome,
-      from_email: formData.email || 'Não informado',
-      from_telefone: formData.telefone || 'Não informado',
-      assunto: formData.assunto,
-      mensagem: formData.mensagem,
-      current_date: new Date().toLocaleString('pt-PT')
-    };
+    // WEB3FORMS - Envio de email (funcionando com email verificado)
+    const formDataToSend = new FormData();
+    formDataToSend.append('access_key', 'ea1c39da-a4d1-441e-a8f5-c32b46bfdb16');
+    formDataToSend.append('name', formData.nome);
+    formDataToSend.append('email', formData.email || 'nao_informado@email.com');
+    formDataToSend.append('phone', formData.telefone || 'Não informado');
+    formDataToSend.append('subject', formData.assunto);
+    formDataToSend.append('message', formData.mensagem);
+    formDataToSend.append('from_name', 'Premium Corretora Site');
 
     try {
-      const response = await emailjs.send(
-        'service_1alndbj',        // SEU SERVICE ID
-        'yX4GiHC0Vd2p9B7CA',      // SEU TEMPLATE ID
-        templateParams
-      );
-      
-      console.log('Email enviado!', response);
-      
-      setStatus('sucesso');
-      setMensagemStatus('Mensagem enviada com sucesso! Entraremos em contacto brevemente.');
-      setFormData({
-        nome: '',
-        email: '',
-        telefone: '',
-        assunto: '',
-        mensagem: ''
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formDataToSend
       });
-      setErros({});
       
-      setTimeout(() => {
-        setStatus('');
-        setMensagemStatus('');
-      }, 5000);
+      const result = await response.json();
+      
+      if (result.success) {
+        setStatus('sucesso');
+        setMensagemStatus('Mensagem enviada com sucesso! Entraremos em contacto brevemente.');
+        setFormData({
+          nome: '',
+          email: '',
+          telefone: '',
+          assunto: '',
+          mensagem: ''
+        });
+        setErros({});
+        
+        setTimeout(() => {
+          setStatus('');
+          setMensagemStatus('');
+        }, 5000);
+      } else {
+        throw new Error(result.message || 'Erro ao enviar');
+      }
       
     } catch (error) {
-      console.error('Erro ao enviar email:', error);
+      console.error('Erro ao enviar:', error);
       setStatus('erro');
       setMensagemStatus('Erro ao enviar mensagem. Tente novamente ou contacte-nos por telefone.');
       setTimeout(() => {
         setStatus('');
         setMensagemStatus('');
       }, 5000);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -155,7 +158,6 @@ function Contactos() {
             <p style={{ color: '#000000', wordBreak: 'break-word' }}>86 132 4444</p>
             <p style={{ color: '#000000', wordBreak: 'break-word' }}>84 747 5190</p>
             <p style={{ color: '#000000', wordBreak: 'break-word' }}>82 / 84 / 87 444 8881</p>
-            
             
             <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#D1B274', marginTop: '20px' }}>
               <FaEnvelope /> Email
@@ -226,6 +228,7 @@ function Contactos() {
                 placeholder="Nome completo *" 
                 value={formData.nome}
                 onChange={handleChange}
+                autoComplete="name"
                 style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px', boxSizing: 'border-box' }}
                 required
               />
@@ -240,6 +243,7 @@ function Contactos() {
                   placeholder="Email" 
                   value={formData.email}
                   onChange={handleChange}
+                  autoComplete="email"
                   style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px', boxSizing: 'border-box' }}
                 />
                 {erros.email && <small style={{ color: 'red' }}>{erros.email}</small>}
@@ -251,6 +255,7 @@ function Contactos() {
                   placeholder="Telefone" 
                   value={formData.telefone}
                   onChange={handleChange}
+                  autoComplete="tel"
                   style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px', boxSizing: 'border-box' }}
                 />
                 {erros.telefone && <small style={{ color: 'red' }}>{erros.telefone}</small>}
@@ -264,6 +269,7 @@ function Contactos() {
                 placeholder="Assunto *" 
                 value={formData.assunto}
                 onChange={handleChange}
+                autoComplete="off"
                 style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px', boxSizing: 'border-box' }}
                 required
               />
@@ -277,6 +283,7 @@ function Contactos() {
                 rows="4"
                 value={formData.mensagem}
                 onChange={handleChange}
+                autoComplete="off"
                 style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px', boxSizing: 'border-box' }}
                 required
               />
@@ -285,9 +292,9 @@ function Contactos() {
             
             <button 
               type="submit" 
-              disabled={status === 'enviando'}
+              disabled={isSubmitting}
               style={{ background: '#D1B274', color: '#000000', padding: '12px 30px', border: 'none', borderRadius: '5px', cursor: 'pointer', width: '100%', fontWeight: 'bold', fontSize: '16px' }}>
-              {status === 'enviando' ? 'Enviando...' : 'Enviar Mensagem'}
+              {isSubmitting ? 'Enviando...' : 'Enviar Mensagem'}
             </button>
             
             {status === 'sucesso' && (
