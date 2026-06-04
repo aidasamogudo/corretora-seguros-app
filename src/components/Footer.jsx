@@ -19,10 +19,26 @@ function Footer() {
         <div>
           <h4 style={{ color: '#D1B274', marginBottom: '1rem', fontSize: '1.1rem' }}>Produtos e Serviços</h4>
           <ul style={{ listStyle: 'none', padding: 0 }}>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro Automóvel</a></li>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro de Saúde</a></li>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro de Vida</a></li>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro Empresarial</a></li>
+            <li style={{ marginBottom: '0.5rem' }}>
+              <a href="/servicos?servico=automovel" style={{ color: '#aaa', textDecoration: 'none' }}>
+                Seguro Automóvel
+              </a>
+            </li>
+            <li style={{ marginBottom: '0.5rem' }}>
+              <a href="/servicos?servico=saude" style={{ color: '#aaa', textDecoration: 'none' }}>
+                Seguro de Saúde
+              </a>
+            </li>
+            <li style={{ marginBottom: '0.5rem' }}>
+              <a href="/servicos?servico=vida" style={{ color: '#aaa', textDecoration: 'none' }}>
+                Seguro de Vida
+              </a>
+            </li>
+            <li style={{ marginBottom: '0.5rem' }}>
+              <a href="/servicos?servico=empresarial" style={{ color: '#aaa', textDecoration: 'none' }}>
+                Seguro Empresarial
+              </a>
+            </li>
           </ul>
         </div>
 
@@ -30,7 +46,9 @@ function Footer() {
         <div>
           <h4 style={{ color: '#D1B274', marginBottom: '1rem', fontSize: '1.1rem' }}>Ajuda e Suporte</h4>
           <ul style={{ listStyle: 'none', padding: 0 }}>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/contactos" style={{ color: '#aaa', textDecoration: 'none' }}>Contactos</a></li>
+            <li style={{ marginBottom: '0.5rem' }}>
+              <a href="/contactos" style={{ color: '#aaa', textDecoration: 'none' }}>Contactos</a>
+            </li>
           </ul>
         </div>
 
@@ -55,8 +73,12 @@ function Footer() {
         <div>
           <h4 style={{ color: '#D1B274', marginBottom: '1rem', fontSize: '1.1rem' }}>Premium Corretora</h4>
           <ul style={{ listStyle: 'none', padding: 0 }}>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/sobre" style={{ color: '#aaa', textDecoration: 'none' }}>Sobre nós</a></li>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/parceiros" style={{ color: '#aaa', textDecoration: 'none' }}>Seguradoras Parceiras</a></li>
+            <li style={{ marginBottom: '0.5rem' }}>
+              <a href="/sobre" style={{ color: '#aaa', textDecoration: 'none' }}>Sobre nós</a>
+            </li>
+            <li style={{ marginBottom: '0.5rem' }}>
+              <a href="/parceiros" style={{ color: '#aaa', textDecoration: 'none' }}>Seguradoras Parceiras</a>
+            </li>
           </ul>
         </div>
 
@@ -64,8 +86,12 @@ function Footer() {
         <div>
           <h4 style={{ color: '#D1B274', marginBottom: '1rem', fontSize: '1.1rem' }}>Legal</h4>
           <ul style={{ listStyle: 'none', padding: 0 }}>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/sobre" style={{ color: '#aaa', textDecoration: 'none' }}>Termos e Condições</a></li>
-            <li style={{ marginBottom: '0.5rem' }}><a href="/sobre" style={{ color: '#aaa', textDecoration: 'none' }}>Política de Privacidade</a></li>
+            <li style={{ marginBottom: '0.5rem' }}>
+              <a href="/sobre" style={{ color: '#aaa', textDecoration: 'none' }}>Termos e Condições</a>
+            </li>
+            <li style={{ marginBottom: '0.5rem' }}>
+              <a href="/sobre" style={{ color: '#aaa', textDecoration: 'none' }}>Política de Privacidade</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -85,9 +111,9 @@ function Footer() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <FaPhone color="#D1B274" size={14} /> 
           <span>86 132 4444</span>  
-          <p></p>
+          <span></span>
           <span>84 747 5190</span>
-           <p></p>              
+           <span></span>              
           <span>82/84/87 444 8881</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>

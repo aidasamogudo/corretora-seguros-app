@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { 
   FaCar, FaHeartbeat, FaUserInjured, FaHardHat, 
   FaFire, FaTruck, FaPlane, FaHeart, FaShieldAlt,
@@ -6,7 +7,33 @@ import {
 } from 'react-icons/fa';
 
 function Servicos() {
-  const [servicoIndex, setServicoIndex] = useState(0);
+  const location = useLocation();
+  
+  // Mapeamento dos nomes para os IDs
+  const servicoMap = {
+    'automovel': 0,
+    'saude': 1,
+    'acidente-pessoal': 2,
+    'acidente-trabalho': 3,
+    'incendio': 4,
+    'transporte': 5,
+    'viagem': 6,
+    'vida': 7,
+    'garantia': 8,
+    'empresarial': 3
+  };
+
+  // Pega o parâmetro da URL e define o índice inicial
+  const params = new URLSearchParams(location.search);
+  const servicoParam = params.get('servico');
+  
+  const [servicoIndex, setServicoIndex] = useState(() => {
+    if (servicoParam && servicoMap[servicoParam]) {
+      return servicoMap[servicoParam];
+    }
+    return 0;
+  });
+  
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [direction, setDirection] = useState('right');
 
@@ -90,22 +117,20 @@ function Servicos() {
     setIsAutoPlaying(false);
   };
 
-  // Auto-play que vai e volta (alterna entre os serviços)
+  // Auto-play que vai e volta
   useEffect(() => {
     if (isAutoPlaying) {
-      let currentDirection = 1; // 1 = próximo, -1 = anterior
+      let currentDirection = 1;
       
       const interval = setInterval(() => {
         setServicoIndex((prev) => {
           const nextIndex = prev + currentDirection;
           
-          // Se chegou no fim, volta
           if (nextIndex >= servicos.length) {
             currentDirection = -1;
             setDirection('left');
             return prev - 1;
           }
-          // Se chegou no início, vai
           if (nextIndex < 0) {
             currentDirection = 1;
             setDirection('right');
@@ -118,7 +143,6 @@ function Servicos() {
       }, 5000);
       return () => clearInterval(interval);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAutoPlaying]);
 
   return (
