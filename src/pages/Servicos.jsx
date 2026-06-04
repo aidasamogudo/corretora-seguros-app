@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { 
   FaCar, FaHeartbeat, FaUserInjured, FaHardHat, 
   FaFire, FaTruck, FaPlane, FaHeart, FaShieldAlt,
@@ -7,33 +6,7 @@ import {
 } from 'react-icons/fa';
 
 function Servicos() {
-  const location = useLocation();
-  
-  // Mapeamento dos nomes para os IDs
-  const servicoMap = {
-    'automovel': 0,
-    'saude': 1,
-    'acidente-pessoal': 2,
-    'acidente-trabalho': 3,
-    'incendio': 4,
-    'transporte': 5,
-    'viagem': 6,
-    'vida': 7,
-    'garantia': 8,
-    'empresarial': 3
-  };
-
-  // Pega o parâmetro da URL e define o índice inicial
-  const params = new URLSearchParams(location.search);
-  const servicoParam = params.get('servico');
-  
-  const [servicoIndex, setServicoIndex] = useState(() => {
-    if (servicoParam && servicoMap[servicoParam]) {
-      return servicoMap[servicoParam];
-    }
-    return 0;
-  });
-  
+  const [servicoIndex, setServicoIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [direction, setDirection] = useState('right');
 
@@ -117,32 +90,15 @@ function Servicos() {
     setIsAutoPlaying(false);
   };
 
-  // Auto-play que vai e volta
+  // Auto-play original (SEM MODIFICAÇÕES)
   useEffect(() => {
-    let currentDirection = 1;
-    
-    const interval = setInterval(() => {
-      setServicoIndex((prev) => {
-        const nextIndex = prev + currentDirection;
-        
-        if (nextIndex >= servicos.length) {
-          currentDirection = -1;
-          setDirection('left');
-          return prev - 1;
-        }
-        if (nextIndex < 0) {
-          currentDirection = 1;
-          setDirection('right');
-          return prev + 1;
-        }
-        
-        setDirection(currentDirection === 1 ? 'right' : 'left');
-        return nextIndex;
-      });
-    }, 5000);
-    
-    return () => clearInterval(interval);
-  }, ); // ← ARRAY VAZIO, SEM DEPENDÊNCIAS!
+    if (isAutoPlaying) {
+      const interval = setInterval(() => {
+        setServicoIndex((prev) => (prev + 1) % servicos.length);
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [isAutoPlaying]);
 
   return (
     <div>

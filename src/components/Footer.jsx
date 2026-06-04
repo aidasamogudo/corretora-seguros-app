@@ -15,32 +15,24 @@ function Footer() {
         marginBottom: '2rem' 
       }}>
         
-        {/* Coluna 1 - Produtos e Serviços */}
-        <div>
-          <h4 style={{ color: '#D1B274', marginBottom: '1rem', fontSize: '1.1rem' }}>Produtos e Serviços</h4>
-          <ul style={{ listStyle: 'none', padding: 0 }}>
-            <li style={{ marginBottom: '0.5rem' }}>
-              <a href="/servicos?servico=automovel" style={{ color: '#aaa', textDecoration: 'none' }}>
-                Seguro Automóvel
-              </a>
-            </li>
-            <li style={{ marginBottom: '0.5rem' }}>
-              <a href="/servicos?servico=saude" style={{ color: '#aaa', textDecoration: 'none' }}>
-                Seguro de Saúde
-              </a>
-            </li>
-            <li style={{ marginBottom: '0.5rem' }}>
-              <a href="/servicos?servico=vida" style={{ color: '#aaa', textDecoration: 'none' }}>
-                Seguro de Vida
-              </a>
-            </li>
-            <li style={{ marginBottom: '0.5rem' }}>
-              <a href="/servicos?servico=empresarial" style={{ color: '#aaa', textDecoration: 'none' }}>
-                Seguro Empresarial
-              </a>
-            </li>
-          </ul>
-        </div>
+       {/* Coluna 1 - Produtos e Serviços */}
+<div>
+  <h4 style={{ color: '#D1B274', marginBottom: '1rem', fontSize: '1.1rem' }}>Produtos e Serviços</h4>
+  <ul style={{ listStyle: 'none', padding: 0 }}>
+    <li style={{ marginBottom: '0.5rem' }}>
+      <a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro Automóvel</a>
+    </li>
+    <li style={{ marginBottom: '0.5rem' }}>
+      <a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro de Saúde</a>
+    </li>
+    <li style={{ marginBottom: '0.5rem' }}>
+      <a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro de Vida</a>
+    </li>
+    <li style={{ marginBottom: '0.5rem' }}>
+      <a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro Empresarial</a>
+    </li>
+  </ul>
+</div>
 
         {/* Coluna 2 - Ajuda e Suporte */}
         <div>
