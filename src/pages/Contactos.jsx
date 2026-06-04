@@ -14,10 +14,7 @@ function Contactos() {
     assunto: '',
     mensagem: ''
   });
-  const [status, setStatus] = useState('');
-  const [mensagemStatus, setMensagemStatus] = useState('');
   const [erros, setErros] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -46,7 +43,7 @@ function Contactos() {
     return texto.trim().length >= 5;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     
     const novosErros = {};
@@ -68,88 +65,55 @@ function Contactos() {
     }
 
     if (!formData.email && !formData.telefone) {
-      setStatus('erro');
-      setMensagemStatus('Por favor, preencha o email OU o telefone para contacto.');
-      setTimeout(() => {
-        setStatus('');
-        setMensagemStatus('');
-      }, 5000);
+      alert('Por favor, preencha o email OU o telefone para contacto.');
       return;
     }
 
     if (Object.keys(novosErros).length > 0) {
       setErros(novosErros);
-      setStatus('erro');
-      setMensagemStatus('Por favor, corrija os erros no formulário.');
-      setTimeout(() => {
-        setStatus('');
-        setMensagemStatus('');
-      }, 5000);
+      alert('Por favor, corrija os erros no formulário.');
       return;
     }
 
-    setIsSubmitting(true);
-    setStatus('enviando');
+    // CONSTRUIR O EMAIL
+    const assuntoEmail = `Contacto do Site: ${formData.assunto}`;
+    const corpoEmail = `
+Nome: ${formData.nome}
+Email: ${formData.email || 'Não informado'}
+Telefone: ${formData.telefone || 'Não informado'}
+Assunto: ${formData.assunto}
 
-    // WEB3FORMS - Envio de email (funcionando com email verificado)
-    const formDataToSend = new FormData();
-    formDataToSend.append('access_key', 'ea1c39da-a4d1-441e-a8f5-c32b46bfdb16');
-    formDataToSend.append('name', formData.nome);
-    formDataToSend.append('email', formData.email || 'nao_informado@email.com');
-    formDataToSend.append('phone', formData.telefone || 'Não informado');
-    formDataToSend.append('subject', formData.assunto);
-    formDataToSend.append('message', formData.mensagem);
-    formDataToSend.append('from_name', 'Premium Corretora Site');
+Mensagem:
+${formData.mensagem}
 
-    try {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: formDataToSend
-      });
-      
-      const result = await response.json();
-      
-      if (result.success) {
-        setStatus('sucesso');
-        setMensagemStatus('Mensagem enviada com sucesso! Entraremos em contacto brevemente.');
-        setFormData({
-          nome: '',
-          email: '',
-          telefone: '',
-          assunto: '',
-          mensagem: ''
-        });
-        setErros({});
-        
-        setTimeout(() => {
-          setStatus('');
-          setMensagemStatus('');
-        }, 5000);
-      } else {
-        throw new Error(result.message || 'Erro ao enviar');
-      }
-      
-    } catch (error) {
-      console.error('Erro ao enviar:', error);
-      setStatus('erro');
-      setMensagemStatus('Erro ao enviar mensagem. Tente novamente ou contacte-nos por telefone.');
-      setTimeout(() => {
-        setStatus('');
-        setMensagemStatus('');
-      }, 5000);
-    } finally {
-      setIsSubmitting(false);
-    }
+---
+Enviado pelo site Premium Corretora de Seguros
+    `;
+
+    // ABRIR O CLIENTE DE EMAIL DO USUÁRIO
+    const mailtoLink = `mailto:premium@premiumcorretoraseguros.com?subject=${encodeURIComponent(assuntoEmail)}&body=${encodeURIComponent(corpoEmail)}`;
+    
+    // Abrir o email no cliente padrão (Outlook, Gmail, etc.)
+    window.location.href = mailtoLink;
+    
+    // Limpar formulário
+    setFormData({
+      nome: '',
+      email: '',
+      telefone: '',
+      assunto: '',
+      mensagem: ''
+    });
+    setErros({});
+    
+    alert('O seu cliente de email será aberto! Basta clicar em enviar.');
   };
 
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px', overflowX: 'hidden' }}>
       <h1 style={{ color: '#D1B274', marginBottom: '30px' }}>Contactos</h1>
       
-      {/* Layout principal com 2 colunas */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', marginBottom: '30px' }}>
-        
-        {/* Coluna Esquerda - Informações */}
         <div style={{ flex: '1 1 300px', minWidth: '250px' }}>
           <div style={{ background: '#fff', padding: '20px', borderRadius: '8px', border: '1px solid #888' }}>
             <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#D1B274' }}>
@@ -202,7 +166,6 @@ function Contactos() {
           </div>
         </div>
         
-        {/* Coluna Direita - Mapa */}
         <div style={{ flex: '1 1 300px', minWidth: '250px' }}>
           <div style={{ background: '#fff', padding: '20px', borderRadius: '8px', border: '1px solid #888', height: '100%' }}>
             <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#D1B274' }}>
@@ -213,7 +176,6 @@ function Contactos() {
         </div>
       </div>
 
-      {/* Formulário centralizado */}
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <div style={{ background: '#fff', padding: '20px', borderRadius: '8px', border: '1px solid #888', maxWidth: '800px', width: '100%' }}>
           <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#D1B274' }}>
@@ -291,23 +253,10 @@ function Contactos() {
             </div>
             
             <button 
-              type="submit" 
-              disabled={isSubmitting}
+              type="submit"
               style={{ background: '#D1B274', color: '#000000', padding: '12px 30px', border: 'none', borderRadius: '5px', cursor: 'pointer', width: '100%', fontWeight: 'bold', fontSize: '16px' }}>
-              {isSubmitting ? 'Enviando...' : 'Enviar Mensagem'}
+              Enviar Mensagem
             </button>
-            
-            {status === 'sucesso' && (
-              <div style={{ background: '#d4edda', color: '#155724', padding: '10px', borderRadius: '5px', marginTop: '15px', textAlign: 'center' }}>
-                <FaCheckCircle /> {mensagemStatus}
-              </div>
-            )}
-            
-            {status === 'erro' && (
-              <div style={{ background: '#f8d7da', color: '#721c24', padding: '10px', borderRadius: '5px', marginTop: '15px', textAlign: 'center' }}>
-                <FaExclamationCircle /> {mensagemStatus}
-              </div>
-            )}
           </form>
         </div>
       </div>
