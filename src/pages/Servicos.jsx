@@ -119,31 +119,30 @@ function Servicos() {
 
   // Auto-play que vai e volta
   useEffect(() => {
-    if (isAutoPlaying) {
-      let currentDirection = 1;
-      
-      const interval = setInterval(() => {
-        setServicoIndex((prev) => {
-          const nextIndex = prev + currentDirection;
-          
-          if (nextIndex >= servicos.length) {
-            currentDirection = -1;
-            setDirection('left');
-            return prev - 1;
-          }
-          if (nextIndex < 0) {
-            currentDirection = 1;
-            setDirection('right');
-            return prev + 1;
-          }
-          
-          setDirection(currentDirection === 1 ? 'right' : 'left');
-          return nextIndex;
-        });
-      }, 5000);
-      return () => clearInterval(interval);
-    }
-  }, [isAutoPlaying]);
+    let currentDirection = 1;
+    
+    const interval = setInterval(() => {
+      setServicoIndex((prev) => {
+        const nextIndex = prev + currentDirection;
+        
+        if (nextIndex >= servicos.length) {
+          currentDirection = -1;
+          setDirection('left');
+          return prev - 1;
+        }
+        if (nextIndex < 0) {
+          currentDirection = 1;
+          setDirection('right');
+          return prev + 1;
+        }
+        
+        setDirection(currentDirection === 1 ? 'right' : 'left');
+        return nextIndex;
+      });
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, ); // ← ARRAY VAZIO, SEM DEPENDÊNCIAS!
 
   return (
     <div>
