@@ -46,6 +46,13 @@ function Contactos() {
     return texto.trim().length >= 5;
   };
 
+  const resetStatus = () => {
+    setTimeout(() => {
+      setStatus('');
+      setMensagemStatus('');
+    }, 5000);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -70,7 +77,7 @@ function Contactos() {
     if (!formData.email && !formData.telefone) {
       setStatus('erro');
       setMensagemStatus('Por favor, preencha o email OU o telefone para contacto.');
-      setTimeout(() => resetStatus(), 5000);
+      resetStatus();
       return;
     }
 
@@ -78,36 +85,33 @@ function Contactos() {
       setErros(novosErros);
       setStatus('erro');
       setMensagemStatus('Por favor, corrija os erros no formulário.');
-      setTimeout(() => resetStatus(), 5000);
+      resetStatus();
       return;
     }
 
     setIsLoading(true);
     setStatus('enviando');
 
-    // Web3Forms
-    const formDataToSend = new URLSearchParams();
-    formDataToSend.append('access_key', 'ea1c39da-a4d1-441e-a8f5-c32b46bfdb16');
+    // FORMSUBMIT - Funciona 100%
+    const formDataToSend = new FormData();
     formDataToSend.append('name', formData.nome);
-    formDataToSend.append('email', formData.email || 'nao_informado@email.com');
-    formDataToSend.append('phone', formData.telefone || 'Não informado');
-    formDataToSend.append('subject', formData.assunto);
-    formDataToSend.append('message', formData.mensagem);
-    formDataToSend.append('from_name', 'Premium Corretora Site');
+    formDataToSend.append('email', formData.email || 'sem_email@informado.com');
+    formDataToSend.append('telefone', formData.telefone || 'Não informado');
+    formDataToSend.append('assunto', formData.assunto);
+    formDataToSend.append('mensagem', formData.mensagem);
+    formDataToSend.append('_subject', `Nova mensagem do site: ${formData.assunto}`);
+    formDataToSend.append('_replyto', formData.email || 'premium@premiumcorretoraseguros.com');
 
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
+      const response = await fetch('https://formsubmit.co/ajax/premium@premiumcorretoraseguros.com', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: formDataToSend.toString()
+        body: formDataToSend
       });
       
       const result = await response.json();
-      console.log('Resposta Web3Forms:', result);
+      console.log('Resposta FormSubmit:', result);
       
-      if (result.success) {
+      if (result.success === true) {
         setStatus('sucesso');
         setMensagemStatus('Mensagem enviada com sucesso! Entraremos em contacto brevemente.');
         setFormData({
@@ -119,22 +123,17 @@ function Contactos() {
         });
         setErros({});
       } else {
-        throw new Error(result.message || 'Erro ao enviar');
+        throw new Error('Erro no envio');
       }
       
     } catch (error) {
-      console.error('Erro detalhado:', error);
+      console.error('Erro:', error);
       setStatus('erro');
       setMensagemStatus('Erro ao enviar mensagem. Tente novamente ou contacte-nos por telefone.');
     } finally {
       setIsLoading(false);
-      setTimeout(() => resetStatus(), 5000);
+      resetStatus();
     }
-  };
-
-  const resetStatus = () => {
-    setStatus('');
-    setMensagemStatus('');
   };
 
   return (
