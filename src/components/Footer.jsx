@@ -100,14 +100,12 @@ function Footer() {
         marginBottom: '1.5rem',
         gap: '1rem'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <FaPhone color="#D1B274" size={14} /> 
-          <span>86 132 4444</span>  
-          <span></span>
-          <span>84 747 5190</span>
-           <span></span>              
-          <span>82/84/87 444 8881</span>
-        </div>
+        <div className="footer-contacts" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+  <FaPhone color="#D1B274" size={14} /> 
+  <span>86 132 4444</span>
+  <span>84 747 5190</span>
+  <span>82/84/87 444 8881</span>
+</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <FaEnvelope color="#D1B274" size={14} />
           <span>premium@premiumcorretoraseguros.com</span>
