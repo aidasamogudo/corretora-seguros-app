@@ -1,11 +1,57 @@
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Header.css';
 
 function Header() {
   const location = useLocation();
+  const [hideHeader, setHideHeader] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detetar se é mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Controlar o header no scroll (apenas mobile)
+  useEffect(() => {
+    if (!isMobile) {
+     
+      return;
+    }
+
+    const controlHeader = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > lastScrollY && currentScrollY > 60) {
+        // Scroll para baixo - esconde o header
+        setHideHeader(true);
+      } else {
+        // Scroll para cima - mostra o header
+        setHideHeader(false);
+      }
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', controlHeader);
+    return () => {
+      window.removeEventListener('scroll', controlHeader);
+    };
+  }, [lastScrollY, isMobile]);
 
   return (
-    <header className="header">
+    <header 
+      className="header"
+      style={{
+        transform: hideHeader && isMobile ? 'translateY(-100%)' : 'translateY(0)',
+        transition: 'transform 0.3s ease-in-out'
+      }}
+    >
       <div className="header-container">
         {/* Logo e Nome da Empresa */}
         <Link to="/" className="logo-link">
