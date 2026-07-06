@@ -11,13 +11,13 @@ const slides = [
   },
   { 
     id: 2, 
-    img: '/images/home/familia.jpg', 
+    img: '/images/home/familia.png', 
     titulo: "Protegemos o que é importante para si",
     subtitulo: "Segurança e tranquilidade para toda a família"
   },
   { 
     id: 3, 
-    img: '/images/home/empresa.jpg', 
+    img: '/images/home/empresa.png', 
     titulo: "Soluções para Empresas",
     subtitulo: "Proteção completa para o seu negócio"
   }
