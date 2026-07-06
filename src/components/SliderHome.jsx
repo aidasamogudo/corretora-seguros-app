@@ -17,7 +17,7 @@ const slides = [
   },
   { 
     id: 3, 
-    img: '/images/home/empresa.png', 
+    img: '/images/home/negocio.png', 
     titulo: "Soluções para Empresas",
     subtitulo: "Proteção completa para o seu negócio"
   }
