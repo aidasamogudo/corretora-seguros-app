@@ -15,24 +15,24 @@ function Footer() {
         marginBottom: '2rem' 
       }}>
         
-       {/* Coluna 1 - Produtos e Serviços */}
-<div>
-  <h4 style={{ color: '#D1B274', marginBottom: '1rem', fontSize: '1.1rem' }}>Produtos e Serviços</h4>
-  <ul style={{ listStyle: 'none', padding: 0 }}>
-    <li style={{ marginBottom: '0.5rem' }}>
-      <a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro Automóvel</a>
-    </li>
-    <li style={{ marginBottom: '0.5rem' }}>
-      <a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro de Saúde</a>
-    </li>
-    <li style={{ marginBottom: '0.5rem' }}>
-      <a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro de Vida</a>
-    </li>
-    <li style={{ marginBottom: '0.5rem' }}>
-      <a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro Empresarial</a>
-    </li>
-  </ul>
-</div>
+        {/* Coluna 1 - Produtos e Serviços */}
+        <div>
+          <h4 style={{ color: '#D1B274', marginBottom: '1rem', fontSize: '1.1rem' }}>Produtos e Serviços</h4>
+          <ul style={{ listStyle: 'none', padding: 0 }}>
+            <li style={{ marginBottom: '0.5rem' }}>
+              <a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro Automóvel</a>
+            </li>
+            <li style={{ marginBottom: '0.5rem' }}>
+              <a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro de Saúde</a>
+            </li>
+            <li style={{ marginBottom: '0.5rem' }}>
+              <a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro de Vida</a>
+            </li>
+            <li style={{ marginBottom: '0.5rem' }}>
+              <a href="/servicos" style={{ color: '#aaa', textDecoration: 'none' }}>Seguro Empresarial</a>
+            </li>
+          </ul>
+        </div>
 
         {/* Coluna 2 - Ajuda e Suporte */}
         <div>
@@ -88,8 +88,8 @@ function Footer() {
         </div>
       </div>
 
-      {/* Linha de contacto rápido */}
-      <div style={{ 
+      {/* Linha de contacto rápido - CORRIGIDA (telefones em linhas separadas no mobile) */}
+      <div className="footer-contacts" style={{ 
         display: 'flex', 
         justifyContent: 'space-between', 
         alignItems: 'center', 
@@ -100,12 +100,21 @@ function Footer() {
         marginBottom: '1.5rem',
         gap: '1rem'
       }}>
-        <div className="footer-contacts" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-  <FaPhone color="#D1B274" size={14} /> 
-  <span>86 132 4444</span>
-  <span>84 747 5190</span>
-  <span>82/84/87 444 8881</span>
-</div>
+        {/* Telefones - em coluna no mobile */}
+        <div className="footer-phone-numbers" style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: '8px',
+          flexWrap: 'wrap'
+        }}>
+          <FaPhone color="#D1B274" size={14} />
+          <span>86 132 4444</span>
+          <span>|</span>
+          <span>84 747 5190</span>
+          <span>|</span>
+          <span>82/84/87 444 8881</span>
+        </div>
+
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <FaEnvelope color="#D1B274" size={14} />
           <span>premium@premiumcorretoraseguros.com</span>
@@ -160,6 +169,25 @@ function Footer() {
       }}>
         <p>Desde 2020 protegendo famílias e empresas em Moçambique | Corretora de Seguros licenciada</p>
       </div>
+
+      {/* CSS para mobile - telefones em linhas separadas */}
+      <style>{`
+        @media (max-width: 768px) {
+          .footer-phone-numbers {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 4px !important;
+          }
+          .footer-phone-numbers span:not(:first-child) {
+            display: none !important;
+          }
+          .footer-contacts {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 0.8rem !important;
+          }
+        }
+      `}</style>
     </footer>
   );
 }

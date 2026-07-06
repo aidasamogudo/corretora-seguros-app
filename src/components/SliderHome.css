@@ -126,7 +126,11 @@
   }
 }
 
-/* Responsividade */
+/* ============================================ */
+/* RESPONSIVIDADE - IMAGENS PROPORCIONAIS */
+/* ============================================ */
+
+/* Tablet (1024px) */
 @media (max-width: 1024px) {
   .content-left h2 {
     font-size: 2.2rem;
@@ -139,15 +143,79 @@
   }
 }
 
+/* Mobile (768px) - IMAGEM PROPORCIONAL */
 @media (max-width: 768px) {
   .slider-container-full {
-    height: 70vh;
-    min-height: 400px;
+    height: 60vh;           /* ← reduz a altura */
+    min-height: 350px;      /* ← altura mínima */
+    max-height: 500px;      /* ← altura máxima */
   }
+  
+  .slide-full {
+    background-size: contain;  /* ← IMAGEM COMPLETA, NÃO CORTA */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #1a1a1a;  /* ← fundo escuro para preencher */
+  }
+  
   .content-left h2 {
     font-size: 1.5rem;
   }
+  
   .content-left p {
     font-size: 0.9rem;
+  }
+  
+  .overlay-full {
+    padding: 0 5%;
+  }
+}
+
+/* Mobile pequeno (480px) */
+@media (max-width: 480px) {
+  .slider-container-full {
+    height: 50vh;
+    min-height: 280px;
+    max-height: 400px;
+  }
+  
+  .content-left h2 {
+    font-size: 1.2rem;
+  }
+  
+  .content-left p {
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  .btn-saiba-mais {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.8rem;
+  }
+  
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .dot.active {
+    width: 20px;
+  }
+}
+
+/* Telas muito pequenas (380px) */
+@media (max-width: 380px) {
+  .slider-container-full {
+    height: 40vh;
+    min-height: 220px;
+    max-height: 320px;
+  }
+  
+  .content-left h2 {
+    font-size: 1rem;
+  }
+  
+  .content-left p {
+    font-size: 0.7rem;
   }
 }
