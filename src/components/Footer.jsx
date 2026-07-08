@@ -54,7 +54,7 @@ function Footer() {
               </a>
             </li>
             <li style={{ marginBottom: '0.5rem' }}>
-              <a href="tel:8284448881" style={{ color: '#aaa', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <a href="tel:874448881" style={{ color: '#aaa', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <FaPhone size={14} color="#D1B274" /> Ligação Gratuita
               </a>
             </li>
