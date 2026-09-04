@@ -6,7 +6,7 @@ const slides = [
   { 
     id: 1, 
     img: '/images/home/carro.png',
-    titulo: "Seguro Automóvel com as melhores parceiras",
+    titulo: "Encontramos o seguro automóvel ideal para si",
     subtitulo: "Proteja o seu veículo com quem entende"
   },
   { 
