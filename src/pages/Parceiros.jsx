@@ -4,7 +4,9 @@ function Parceiros() {
     { nome: "Palma", logo: "/images/parceiros/palma.png", largura: 170, altura: 140 },
     { nome: "Imperial", logo: "/images/parceiros/imperial.png", largura: 150, altura: 130 },
     { nome: "Indico", logo: "/images/parceiros/indico.png", largura: 180, altura: 150 },
-    { nome: "Britam", logo: "/images/parceiros/britam.png", largura: 150, altura: 110 }
+    { nome: "Britam", logo: "/images/parceiros/britam.png", largura: 150, altura: 110 },
+    { nome: "Horizonte", logo: "/images/parceiros/horizonte.png", largura: 170, altura: 140 },
+    { nome: "Maximo", logo: "/images/parceiros/maximo.png", largura: 120, altura: 120 },
   ];
 
   return (

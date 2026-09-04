@@ -19,7 +19,7 @@ const slides = [
     id: 3, 
     img: '/images/home/negocio.png', 
     titulo: "A proteção certa para o seu negócio",
-    subtitulo: "Encontramos as soluções empresariais mais adequadas, com as melhores parceiras"
+    subtitulo: "Encontramos as soluções empresariais mais adequadas, com as melhores parceiras."
   }
 ];
 
