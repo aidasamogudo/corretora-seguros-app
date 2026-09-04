@@ -6,7 +6,7 @@ function Parceiros() {
     { nome: "Indico", logo: "/images/parceiros/indico.png", largura: 180, altura: 150 },
     { nome: "Britam", logo: "/images/parceiros/britam.png", largura: 150, altura: 110 },
     { nome: "Horizonte", logo: "/images/parceiros/horizonte.png", largura: 170, altura: 140 },
-    { nome: "Maximo", logo: "/images/parceiros/maximo.png", largura: 120, altura: 120 },
+    { nome: "Maximo", logo: "/images/parceiros/maximo.png", largura: 110, altura: 110 },
   ];
 
   return (
