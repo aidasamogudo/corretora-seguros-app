@@ -7,19 +7,19 @@ const slides = [
     id: 1, 
     img: '/images/home/carro.png',
     titulo: "Encontramos o seguro automóvel ideal para si",
-    subtitulo: "Proteja o seu veículo com quem entende"
+    subtitulo: "O seguro automóvel certo espera por si. Nós ajudamos a encontrá-lo."
   },
   { 
     id: 2, 
     img: '/images/home/familia.png', 
-    titulo: "Protegemos o que é importante para si",
-    subtitulo: "Segurança e tranquilidade para toda a família"
+    titulo: "Soluções de seguro para o que mais importa",
+    subtitulo: "Proteja a sua família com as melhores opções do mercado. Nós fazemos a pesquisa por si."
   },
   { 
     id: 3, 
     img: '/images/home/negocio.png', 
-    titulo: "Soluções para Empresas",
-    subtitulo: "Proteção completa para o seu negócio"
+    titulo: "A proteção certa para o seu negócio",
+    subtitulo: "Encontramos as soluções empresariais mais adequadas, com as melhores parceiras"
   }
 ];
 
