@@ -8,7 +8,6 @@ import {
 function Servicos() {
   const [servicoIndex, setServicoIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [direction, setDirection] = useState('right');
 
   const servicos = [
     {
@@ -76,16 +75,12 @@ function Servicos() {
     }
   ];
 
-  const servicoAtual = servicos[servicoIndex];
-
   const proximoServico = () => {
-    setDirection('right');
     setServicoIndex((prev) => (prev + 1) % servicos.length);
     setIsAutoPlaying(false);
   };
 
   const servicoAnterior = () => {
-    setDirection('left');
     setServicoIndex((prev) => (prev - 1 + servicos.length) % servicos.length);
     setIsAutoPlaying(false);
   };
@@ -157,82 +152,86 @@ function Servicos() {
           <FaChevronRight size={24} color="#888" />
         </div>
 
-        {/* Conteúdo do carrossel com animação de slide */}
+        {/* Conteúdo do carrossel: cartões empilhados com transição suave (crossfade) */}
         <div className="carrossel-wrapper" style={{
+          display: 'grid',
           overflow: 'hidden',
           borderRadius: '5px'
         }}>
-          <div 
-            key={servicoIndex}
-            className={`slide-animation slide-${direction}`}
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '2rem',
-              background: '#ffffff',
-              borderRadius: '5px',
-              overflow: 'hidden',
-              minHeight: '450px',
-              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
-              border: '1px solid #ddd',
-              transition: 'all 0.5s ease-in-out'
-            }}
-          >
-            {/* IMAGEM - LADO ESQUERDO */}
-            <div style={{
-              background: `linear-gradient(135deg, rgba(209, 178, 116, 0.1), rgba(0,0,0,0.3)), url(${servicoAtual.imagem})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              minHeight: '450px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }} />
-
-            {/* TEXTO - LADO DIREITO */}
-            <div style={{
-              padding: '2rem',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center'
-            }}>
+          {servicos.map((servico, index) => (
+            <div 
+              key={servico.id}
+              className={`servico-slide ${index === servicoIndex ? 'active' : ''}`}
+              aria-hidden={index !== servicoIndex}
+              style={{
+                gridArea: '1 / 1',
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: '2rem',
+                background: '#ffffff',
+                borderRadius: '5px',
+                overflow: 'hidden',
+                minHeight: '450px',
+                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
+                border: '1px solid #ddd'
+              }}
+            >
+              {/* IMAGEM - LADO ESQUERDO */}
               <div style={{
+                background: `linear-gradient(135deg, rgba(209, 178, 116, 0.1), rgba(0,0,0,0.3)), url(${servico.imagem})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                minHeight: '450px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '12px',
-                marginBottom: '1rem'
+                justifyContent: 'center'
+              }} />
+
+              {/* TEXTO - LADO DIREITO */}
+              <div style={{
+                padding: '2rem',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center'
               }}>
-                {servicoAtual.icone}
-                <h2 style={{ color: '#D1B274', margin: 0 }}>{servicoAtual.nome}</h2>
-              </div>
-              <p style={{
-                color: '#000000',
-                lineHeight: '1.8',
-                fontSize: '1rem',
-                marginBottom: '1.5rem'
-              }}>
-                {servicoAtual.descricao}
-              </p>
-              <button
-                onClick={() => window.location.href = '/contactos'}
-                style={{
-                  background: '#D1B274',
-                  color: '#020202',
-                  border: 'none',
-                  padding: '0.8rem 1.5rem',
-                  borderRadius: '5px',
-                  cursor: 'pointer',
-                  fontWeight: '600',
+                <div style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px',
-                  width: 'fit-content'
-                }}
-              >
-                Solicitar Cotação <FaChevronRight size={14} />
-              </button>
+                  gap: '12px',
+                  marginBottom: '1rem'
+                }}>
+                  {servico.icone}
+                  <h2 style={{ color: '#D1B274', margin: 0 }}>{servico.nome}</h2>
+                </div>
+                <p style={{
+                  color: '#000000',
+                  lineHeight: '1.8',
+                  fontSize: '1rem',
+                  marginBottom: '1.5rem'
+                }}>
+                  {servico.descricao}
+                </p>
+                <button
+                  onClick={() => window.location.href = '/contactos'}
+                  style={{
+                    background: '#D1B274',
+                    color: '#020202',
+                    border: 'none',
+                    padding: '0.8rem 1.5rem',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    fontWeight: '600',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    width: 'fit-content'
+                  }}
+                >
+                  Solicitar Cotação <FaChevronRight size={14} />
+                </button>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
 
@@ -248,12 +247,6 @@ function Servicos() {
           <div
             key={index}
             onClick={() => {
-              if (index > servicoIndex) {
-                setDirection('right');
-              }
-              if (index < servicoIndex) {
-                setDirection('left');
-              }
               setServicoIndex(index);
               setIsAutoPlaying(false);
             }}
@@ -271,46 +264,51 @@ function Servicos() {
 
       {/* CSS Animations e Responsivo */}
       <style>{`
-        @keyframes slideInFromRight {
-          from {
-            opacity: 0;
-            transform: translateX(100%);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
+        .servico-slide {
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 1s ease-in-out, visibility 0s linear 1s;
         }
 
-        @keyframes slideInFromLeft {
-          from {
-            opacity: 0;
-            transform: translateX(-100%);
+        .servico-slide.active {
+          opacity: 1;
+          visibility: visible;
+          transition: opacity 1s ease-in-out, visibility 0s;
+          z-index: 1;
+        }
+
+        .servico-slide > div:first-child {
+          transform: scale(1.04);
+          transition: transform 6s ease-out;
+        }
+
+        .servico-slide.active > div:first-child {
+          transform: scale(1);
+        }
+
+        .servico-slide > div:last-child {
+          opacity: 0;
+          transform: translateY(15px);
+          transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .servico-slide.active > div:last-child {
+          opacity: 1;
+          transform: translateY(0);
+          transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .servico-slide > div {
+            transform: none !important;
           }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        .slide-animation {
-          animation-duration: 0.5s;
-          animation-fill-mode: forwards;
-        }
-
-        .slide-right {
-          animation-name: slideInFromRight;
-        }
-
-        .slide-left {
-          animation-name: slideInFromLeft;
         }
 
         @media (max-width: 768px) {
-          .slide-animation {
+          .servico-slide {
             grid-template-columns: 1fr !important;
           }
-          .slide-animation > div:first-child {
+          .servico-slide > div:first-child {
             min-height: 250px !important;
           }
           div[style*="position: 'absolute'"] {

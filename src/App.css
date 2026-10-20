@@ -17,11 +17,15 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow-x: clip; /* evita scroll horizontal do slider em 100vw (clip não quebra o header sticky) */
 }
 
 main {
   flex: 1;
   padding: 2rem 5%;
+  /* o conteúdo ocupa sempre o ecrã inteiro (menos o header ~99px); o footer só aparece com scroll */
+  min-height: calc(100vh - 99px);
+  min-height: calc(100svh - 99px);
 }
 
 h1, h2, h3 {

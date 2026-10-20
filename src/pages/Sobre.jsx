@@ -5,7 +5,6 @@ function Sobre() {
   
   const [publicoIndex, setPublicoIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [direction, setDirection] = useState('right');
 
   const publicos = [
     {
@@ -24,16 +23,12 @@ function Sobre() {
     }
   ];
 
-  const publicoAtual = publicos[publicoIndex];
-
   const proximoPublico = () => {
-    setDirection('right');
     setPublicoIndex((prev) => (prev + 1) % publicos.length);
     setIsAutoPlaying(false);
   };
 
   const publicoAnterior = () => {
-    setDirection('left');
     setPublicoIndex((prev) => (prev - 1 + publicos.length) % publicos.length);
     setIsAutoPlaying(false);
   };
@@ -50,17 +45,14 @@ function Sobre() {
           // Se chegou no fim, volta
           if (nextIndex >= publicos.length) {
             currentDirection = -1;
-            setDirection('left');
             return prev - 1;
           }
           // Se chegou no início, vai
           if (nextIndex < 0) {
             currentDirection = 1;
-            setDirection('right');
             return prev + 1;
           }
-          
-          setDirection(currentDirection === 1 ? 'right' : 'left');
+
           return nextIndex;
         });
       }, 5000);
@@ -215,95 +207,99 @@ function Sobre() {
           <ChevronRight size={24} color="#888" />
         </div>
 
-        {/* Conteúdo do carrossel com animação de slide */}
+        {/* Conteúdo do carrossel: cartões empilhados com transição suave (crossfade) */}
         <div className="carrossel-wrapper" style={{
+          display: 'grid',
           overflow: 'hidden',
           borderRadius: '5px'
         }}>
-          <div 
-            key={publicoIndex}
-            className={`slide-animation slide-${direction}`}
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              gap: '2rem',
-              background: '#ffffff',
-              border: '1px solid #888',
-              borderRadius: '5px',
-              transition: 'all 0.5s ease-in-out'
-            }}
-          >
-            <div className="detalhe-imagem" style={{
-              flex: '1',
-              minWidth: '250px',
-              position: 'relative',
-              minHeight: '300px',
-              overflow: 'hidden'
-            }}>
-              <img 
-                src={publicoAtual.imagem}
-                alt={publicoAtual.nome}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0
-                }}
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = 'https://via.placeholder.com/600x400?text=Premium+Corretora';
-                }}
-              />
-            </div>
-
-            <div className="detalhe-texto" style={{
-              flex: '1',
-              minWidth: '250px',
-              padding: '2rem',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center'
-            }}>
-              <div style={{
+          {publicos.map((publico, index) => (
+            <div 
+              key={index}
+              className={`publico-slide ${index === publicoIndex ? 'active' : ''}`}
+              aria-hidden={index !== publicoIndex}
+              style={{
+                gridArea: '1 / 1',
                 display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                marginBottom: '1rem'
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                gap: '2rem',
+                background: '#ffffff',
+                border: '1px solid #888',
+                borderRadius: '5px'
+              }}
+            >
+              <div className="detalhe-imagem" style={{
+                flex: '1',
+                minWidth: '250px',
+                position: 'relative',
+                minHeight: '300px',
+                overflow: 'hidden'
               }}>
-                {publicoAtual.icone}
-                <h2 style={{ color: '#D1B274', margin: 0 }}>{publicoAtual.nome}</h2>
+                <img 
+                  src={publico.imagem}
+                  alt={publico.nome}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0
+                  }}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'https://via.placeholder.com/600x400?text=Premium+Corretora';
+                  }}
+                />
               </div>
-              <p style={{
-                color: '#000000',
-                lineHeight: '1.8',
-                fontSize: '1rem',
-                marginBottom: '1.5rem'
+
+              <div className="detalhe-texto" style={{
+                flex: '1',
+                minWidth: '250px',
+                padding: '2rem',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center'
               }}>
-                {publicoAtual.descricao}
-              </p>
-              <button
-                onClick={() => window.location.href = '/contactos'}
-                style={{
-                  background: '#D1B274',
-                  color: '#000000',
-                  border: 'none',
-                  padding: '0.8rem 1.5rem',
-                  borderRadius: '5px',
-                  cursor: 'pointer',
-                  fontWeight: '600',
+                <div style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px',
-                  width: 'fit-content'
-                }}
-              >
-                Solicitar Cotação <ChevronRight size={14} />
-              </button>
+                  gap: '12px',
+                  marginBottom: '1rem'
+                }}>
+                  {publico.icone}
+                  <h2 style={{ color: '#D1B274', margin: 0 }}>{publico.nome}</h2>
+                </div>
+                <p style={{
+                  color: '#000000',
+                  lineHeight: '1.8',
+                  fontSize: '1rem',
+                  marginBottom: '1.5rem'
+                }}>
+                  {publico.descricao}
+                </p>
+                <button
+                  onClick={() => window.location.href = '/contactos'}
+                  style={{
+                    background: '#D1B274',
+                    color: '#000000',
+                    border: 'none',
+                    padding: '0.8rem 1.5rem',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    fontWeight: '600',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    width: 'fit-content'
+                  }}
+                >
+                  Solicitar Cotação <ChevronRight size={14} />
+                </button>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
 
@@ -318,12 +314,6 @@ function Sobre() {
           <div
             key={index}
             onClick={() => {
-              if (index > publicoIndex) {
-                setDirection('right');
-              }
-              if (index < publicoIndex) {
-                setDirection('left');
-              }
               setPublicoIndex(index);
               setIsAutoPlaying(false);
             }}
@@ -436,39 +426,45 @@ function Sobre() {
 
       {/* CSS Animations e Responsivo */}
       <style>{`
-        @keyframes slideInFromRight {
-          from {
-            opacity: 0;
-            transform: translateX(100%);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
+        .publico-slide {
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 1s ease-in-out, visibility 0s linear 1s;
         }
 
-        @keyframes slideInFromLeft {
-          from {
-            opacity: 0;
-            transform: translateX(-100%);
+        .publico-slide.active {
+          opacity: 1;
+          visibility: visible;
+          transition: opacity 1s ease-in-out, visibility 0s;
+          z-index: 1;
+        }
+
+        .publico-slide .detalhe-imagem img {
+          transform: scale(1.04);
+          transition: transform 6s ease-out;
+        }
+
+        .publico-slide.active .detalhe-imagem img {
+          transform: scale(1);
+        }
+
+        .publico-slide .detalhe-texto {
+          opacity: 0;
+          transform: translateY(15px);
+          transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .publico-slide.active .detalhe-texto {
+          opacity: 1;
+          transform: translateY(0);
+          transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .publico-slide .detalhe-imagem img,
+          .publico-slide .detalhe-texto {
+            transform: none !important;
           }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        .slide-animation {
-          animation-duration: 0.5s;
-          animation-fill-mode: forwards;
-        }
-
-        .slide-right {
-          animation-name: slideInFromRight;
-        }
-
-        .slide-left {
-          animation-name: slideInFromLeft;
         }
 
         @media (max-width: 768px) {

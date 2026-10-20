@@ -26,17 +26,14 @@ const slides = [
 function SliderHome() {
   const [current, setCurrent] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [direction, setDirection] = useState('right');
   const directionRef = useRef(1);
 
   const nextSlide = () => {
-    setDirection('right');
     setCurrent((prev) => (prev + 1) % slides.length);
     setIsAutoPlaying(false);
   };
 
   const prevSlide = () => {
-    setDirection('left');
     setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
     setIsAutoPlaying(false);
   };
@@ -50,24 +47,19 @@ function SliderHome() {
         
         if (nextIndex >= slides.length) {
           directionRef.current = -1;
-          setDirection('left');
           return prev - 1;
         }
         if (nextIndex < 0) {
           directionRef.current = 1;
-          setDirection('right');
           return prev + 1;
         }
-        
-        setDirection(directionRef.current === 1 ? 'right' : 'left');
+
         return nextIndex;
       });
     }, 5000);
     
     return () => clearInterval(interval);
   }, [isAutoPlaying]);
-
-  const slideAtual = slides[current];
 
   return (
     <div className="slider-container-full">
@@ -120,35 +112,30 @@ function SliderHome() {
         <ChevronRight size={24} color="#fff" />
       </div>
 
-      {/* Slide com animação de rastejar (slide) */}
-      <div 
-        key={current}
-        className={`slide-full active slide-${direction}`}
-        style={{ 
-          backgroundImage: `linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%), url(${slideAtual.img})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          padding: '0 10%',
-          position: 'absolute',
-          top: 0,
-          left: 0
-        }}
-      >
-        <div className="content-left">
-          <h2>{slideAtual.titulo}</h2>
-          <p>{slideAtual.subtitulo}</p>
-          <button 
-            className="btn-saiba-mais"
-            onClick={() => window.location.href = '/contactos'}
-          >
-            Saiba Mais →
-          </button>
+      {/* Slides empilhados com transição suave (crossfade) */}
+      {slides.map((slide, index) => (
+        <div
+          key={slide.id}
+          className={`slide-full ${index === current ? 'active' : ''}`}
+          aria-hidden={index !== current}
+          style={{ '--slide-img': `url(${slide.img})` }}
+        >
+          {/* Fundo desfocado que preenche as laterais + foto inteira, sem cortes */}
+          <div className="slide-fundo" />
+          <div className="slide-foto" />
+
+          <div className="content-left">
+            <h2>{slide.titulo}</h2>
+            <p>{slide.subtitulo}</p>
+            <button 
+              className="btn-saiba-mais"
+              onClick={() => window.location.href = '/contactos'}
+            >
+              Saiba Mais →
+            </button>
+          </div>
         </div>
-      </div>
+      ))}
 
       {/* Indicadores (dots) */}
       <div className="dots-container">
@@ -157,12 +144,6 @@ function SliderHome() {
             key={index}
             className={`dot ${index === current ? 'active' : ''}`}
             onClick={() => {
-              if (index > current) {
-                setDirection('right');
-              }
-              if (index < current) {
-                setDirection('left');
-              }
               setCurrent(index);
               setIsAutoPlaying(false);
             }}
@@ -170,39 +151,8 @@ function SliderHome() {
         ))}
       </div>
 
-      {/* CSS para animação de rastejar */}
+      {/* Ajustes responsivos */}
       <style>{`
-        @keyframes slideInFromRight {
-          from {
-            transform: translateX(100%);
-          }
-          to {
-            transform: translateX(0);
-          }
-        }
-
-        @keyframes slideInFromLeft {
-          from {
-            transform: translateX(-100%);
-          }
-          to {
-            transform: translateX(0);
-          }
-        }
-
-        .slide-full {
-          animation-duration: 0.5s;
-          animation-fill-mode: forwards;
-        }
-
-        .slide-right {
-          animation-name: slideInFromRight;
-        }
-
-        .slide-left {
-          animation-name: slideInFromLeft;
-        }
-
         @media (max-width: 768px) {
           .slider-container-full div[style*="position: 'absolute'"] {
             width: 30px !important;

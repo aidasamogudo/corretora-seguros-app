@@ -5,6 +5,7 @@
   margin: 1rem 0;
   z-index: 1;
   border: 1px solid #888;
+  display: block;
 }
 
 /* Responsivo para mobile */

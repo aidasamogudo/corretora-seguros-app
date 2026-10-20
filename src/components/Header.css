@@ -58,6 +58,7 @@
 .nav-menu {
   display: flex;
   align-items: center;
+  justify-content: flex-end; /* logo à esquerda, menu à direita */
   flex: 1;
 }
 

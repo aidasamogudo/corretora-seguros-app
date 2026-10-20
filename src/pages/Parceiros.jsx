@@ -10,16 +10,28 @@ function Parceiros() {
   ];
 
   return (
-    <div>
+    <div className="parceiros-page">
       <style>{`
+        /* ocupa a altura do <main> (ecrã - header ~99px - padding 2rem x2) */
+        .parceiros-page {
+          display: flex;
+          flex-direction: column;
+          min-height: calc(100vh - 99px - 4rem);
+          min-height: calc(100svh - 99px - 4rem);
+        }
+
         .parceiros-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center; /* centra todas as linhas, incluindo a última */
           gap: 2rem;
-          margin-top: 2rem;
+          margin: auto 0; /* centra os logos verticalmente no espaço abaixo do título */
+          padding: 2rem 0;
         }
 
         .parceiro-card {
+          flex: 0 1 220px;
+          box-sizing: border-box;
           background: #ffffff;
           padding: 1.5rem;
           text-align: center;
@@ -41,11 +53,18 @@ function Parceiros() {
 
         /* Responsivo para mobile */
         @media (max-width: 768px) {
+          .parceiros-page {
+            min-height: calc(100svh - 99px - 2rem); /* padding do <main> no mobile é 1rem */
+          }
           .parceiros-grid {
             gap: 1rem;
           }
           .parceiro-card {
+            flex-basis: calc(50% - 0.5rem);
             padding: 1rem;
+          }
+          .parceiro-card img {
+            max-width: 100%;
           }
         }
       `}</style>
