@@ -1,0 +1,11 @@
+services:
+  site:
+    build: .
+    image: premiumcorretoraseguros-site
+    container_name: premiumcorretoraseguros-site
+    restart: unless-stopped
+    # Só acessível localmente; o Nginx do servidor trata do HTTPS e reencaminha para aqui.
+    # Para testar no próprio computador: http://localhost:8081
+    # Outra porta: SITE_PORT=8090 docker compose up -d (e atualizar o proxy_pass do Nginx do servidor)
+    ports:
+      - "127.0.0.1:${SITE_PORT:-8081}:80"
