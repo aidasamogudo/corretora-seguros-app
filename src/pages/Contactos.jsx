@@ -68,18 +68,11 @@ function Contactos() {
     if (!validarTexto(formData.mensagem)) {
       novosErros.mensagem = 'Mensagem deve ter pelo menos 5 letras';
     }
-    if (formData.email && !validarEmail(formData.email)) {
+    if (!validarEmail(formData.email)) {
       novosErros.email = 'Digite um email válido (ex: nome@dominio.com)';
     }
-    if (formData.telefone && !validarTelefone(formData.telefone)) {
+    if (!validarTelefone(formData.telefone)) {
       novosErros.telefone = 'Digite um telefone válido (ex: 84 123 4567)';
-    }
-
-    if (!formData.email && !formData.telefone) {
-      setStatus('erro');
-      setMensagemStatus('Por favor, preencha o email OU o telefone para contacto.');
-      resetStatus();
-      return;
     }
 
     if (Object.keys(novosErros).length > 0) {
@@ -201,10 +194,11 @@ function Contactos() {
                 <input 
                   type="email" 
                   name="email" 
-                  placeholder="Email" 
+                  placeholder="Email *"
                   value={formData.email}
                   onChange={handleChange}
                   style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px', boxSizing: 'border-box' }}
+                  required
                 />
                 {erros.email && <small style={{ color: 'red' }}>{erros.email}</small>}
               </div>
@@ -212,10 +206,11 @@ function Contactos() {
                 <input 
                   type="tel" 
                   name="telefone" 
-                  placeholder="Telefone" 
+                  placeholder="Telefone *"
                   value={formData.telefone}
                   onChange={handleChange}
                   style={{ width: '100%', padding: '12px', border: '1px solid #888', borderRadius: '5px', fontSize: '16px', boxSizing: 'border-box' }}
+                  required
                 />
                 {erros.telefone && <small style={{ color: 'red' }}>{erros.telefone}</small>}
               </div>
