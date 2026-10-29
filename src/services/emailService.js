@@ -13,11 +13,12 @@ export async function enviarEmail({ nome, email, telefone, assunto, mensagem }) 
     SERVICE_ID,
     TEMPLATE_ID,
     {
-      nome,
-      email: email || 'Não informado',
-      telefone: telefone || 'Não informado',
+      from_name: nome,
+      from_email: email || 'Não informado',
+      from_telefone: telefone || 'Não informado',
       assunto,
       mensagem,
+      current_date: new Date().toLocaleString('pt-PT'),
       reply_to: email || 'premium@premiumcorretoraseguros.com'
     },
     { publicKey: PUBLIC_KEY }
