@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Mapa from '../components/Mapa';
+import { enviarEmail } from '../services/emailService';
 import { 
   FaFacebook, FaInstagram, FaTiktok, FaWhatsapp, 
   FaEnvelope, FaPhone, FaMapMarkerAlt, 
@@ -53,7 +54,7 @@ function Contactos() {
     }, 5000);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     const novosErros = {};
@@ -92,38 +93,26 @@ function Contactos() {
     setIsLoading(true);
     setStatus('enviando');
 
-    // FORMSUBMIT - Envio do email
-    const formDataToSend = new FormData();
-    formDataToSend.append('name', formData.nome);
-    formDataToSend.append('email', formData.email || 'sem_email@informado.com');
-    formDataToSend.append('telefone', formData.telefone || 'Não informado');
-    formDataToSend.append('assunto', formData.assunto);
-    formDataToSend.append('mensagem', formData.mensagem);
-    formDataToSend.append('_subject', `Nova mensagem do site: ${formData.assunto}`);
-    formDataToSend.append('_replyto', formData.email || 'premium@premiumcorretoraseguros.com');
-
-    // Envia o email (ignora qualquer erro de resposta)
-    fetch('https://formsubmit.co/ajax/premium@premiumcorretoraseguros.com', {
-      method: 'POST',
-      body: formDataToSend
-    }).catch(() => {
-      // Ignora erro - o email pode ter sido enviado mesmo assim
-      console.log('Email enviado ou tentativa concluída');
-    });
-
-    // SEMPRE mostra mensagem de sucesso
-    setStatus('sucesso');
-    setMensagemStatus('✅ Mensagem enviada com sucesso! Aguarde o nosso contacto. Obrigado!');
-    setFormData({
-      nome: '',
-      email: '',
-      telefone: '',
-      assunto: '',
-      mensagem: ''
-    });
-    setErros({});
-    setIsLoading(false);
-    resetStatus();
+    try {
+      await enviarEmail(formData);
+      setStatus('sucesso');
+      setMensagemStatus('Mensagem enviada com sucesso! Aguarde o nosso contacto. Obrigado!');
+      setFormData({
+        nome: '',
+        email: '',
+        telefone: '',
+        assunto: '',
+        mensagem: ''
+      });
+      setErros({});
+    } catch (error) {
+      console.error('Erro ao enviar email:', error);
+      setStatus('erro');
+      setMensagemStatus('Não foi possível enviar a mensagem. Tente novamente ou contacte-nos por telefone/WhatsApp.');
+    } finally {
+      setIsLoading(false);
+      resetStatus();
+    }
   };
 
   return (

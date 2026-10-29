@@ -1,6 +1,12 @@
 services:
   site:
-    build: .
+    build:
+      context: .
+      # Lidas do .env na raiz do projeto
+      args:
+        VITE_EMAILJS_SERVICE_ID: ${VITE_EMAILJS_SERVICE_ID}
+        VITE_EMAILJS_TEMPLATE_ID: ${VITE_EMAILJS_TEMPLATE_ID}
+        VITE_EMAILJS_PUBLIC_KEY: ${VITE_EMAILJS_PUBLIC_KEY}
     image: premiumcorretoraseguros-site
     container_name: premiumcorretoraseguros-site
     restart: unless-stopped

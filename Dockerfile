@@ -6,6 +6,15 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
+
+# Variáveis do Vite são embutidas no build (o .env não entra na imagem)
+ARG VITE_EMAILJS_SERVICE_ID
+ARG VITE_EMAILJS_TEMPLATE_ID
+ARG VITE_EMAILJS_PUBLIC_KEY
+ENV VITE_EMAILJS_SERVICE_ID=$VITE_EMAILJS_SERVICE_ID \
+    VITE_EMAILJS_TEMPLATE_ID=$VITE_EMAILJS_TEMPLATE_ID \
+    VITE_EMAILJS_PUBLIC_KEY=$VITE_EMAILJS_PUBLIC_KEY
+
 RUN npm run build
 
 # 2) Servir com Nginx
